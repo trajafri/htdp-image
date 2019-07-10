@@ -1,0 +1,30 @@
+name:                  htdp-image
+version:               0.1.0.0
+license:               BSD3
+license-file:          LICENSE
+author:                Turab Jafri
+maintainer:            trajafri@gmail.com
+category:              Graphics
+build-type:            Simple
+extra-source-files:    CHANGELOG.md
+cabal-version:         >=1.10
+
+synopsis:            
+  Beginner friendly graphics library.
+
+description:         
+  htdp-image is a simple graphics library inspired by Racket's htdp/image.
+  Under the hood, it is currently a wrapper on top of Gloss, another easy
+  to use graphics library but makes drawing objects even easier.
+
+library
+  exposed-modules:     Main
+  build-depends:       base >=4.12 && <4.13,
+                       gloss ==1.13.*
+  hs-source-dirs:      src
+  ghc-options:         -Wall
+                       -Wcompat
+                       -Wincomplete-record-updates
+                       -Wincomplete-uni-patterns
+                       -Wredundant-constraints
+  default-language:    Haskell2010
