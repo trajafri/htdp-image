@@ -1,4 +1,4 @@
-## htdp-image
+# htdp-image
 
 htdp-image is a simple graphics library inspired by Racket's htdp/image.
 
@@ -10,9 +10,9 @@ work on a lower level than Gloss.
 
 Currently, the htdp-image uses the [combinator pattern](https://wiki.haskell.org/Combinator_pattern) to draw images.
 
-#Examples:
+## Examples:
 
-To draw four circles beside each other:
+To draw five circles beside each other:
 
 ```haskell
 drawImage $ foldr1 beside $ replicate 5 (circle 20 Solid red)
@@ -21,7 +21,7 @@ drawImage $ foldr1 beside $ replicate 5 (circle 20 Solid red)
 ![alt text](https://raw.githubusercontent.com/trajafri/htdp-image/master/example-images/beside.png "Four circles beside each other")
 
 
-To draw four circles above each other:
+To draw five circles above each other:
 
 ```haskell
 drawImage $ foldr1 above $ replicate 5 (circle 20 Solid red)
@@ -30,7 +30,7 @@ drawImage $ foldr1 above $ replicate 5 (circle 20 Solid red)
 ![alt text](https://raw.githubusercontent.com/trajafri/htdp-image/master/example-images/above.png "Four circles above each other")
 
 
-To draw two circles stack on top:
+To draw four circles stacked on top of each other (2 on 2):
 
 ```haskell
 drawImage $ above (beside redCirc blueCirc) (beside blueCirc redCirc)
