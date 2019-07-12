@@ -43,7 +43,7 @@ drawImage $ above (beside redCirc blueCirc) (beside blueCirc redCirc)
 ![alt text](https://raw.githubusercontent.com/trajafri/htdp-image/master/example-images/above-beside.png "Two circles stacked on each other")
 
 
-To draw four iterations of the sierpinski triangle (don't try a big number of iterations!):
+To draw four iterations of the sierpinski triangle (don't try super big iterations!):
 
 ```haskell
 drawImage $ foldr (const sier) (triangle 20 Solid red) [1, 2, 3, 4]
