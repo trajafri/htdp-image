@@ -1,5 +1,5 @@
 name:                  htdp-image
-version:               0.1.0.0
+version:               0.2.0.0
 license:               BSD3
 license-file:          LICENSE
 author:                Turab Jafri
@@ -7,7 +7,7 @@ maintainer:            trajafri@gmail.com
 category:              Graphics
 build-type:            Simple
 extra-source-files:    CHANGELOG.md
-cabal-version:         >=1.10
+cabal-version:         >=2.0
 
 synopsis:            
   Beginner friendly graphics library.
@@ -18,9 +18,12 @@ description:
   to use graphics library but htdp-image makes drawing objects even easier for beginners.
 
 library
-  exposed-modules:     Main
+  exposed-modules:     Graphics.Htdp
+  other-modules:       Graphics.Shape,
+                       Graphics.Combinator,
+                       Graphics.Data.Image
   build-depends:       base >=4.12 && <4.13,
-                       gloss ==1.13.*
+                       gloss ^>=1.13.0
   hs-source-dirs:      src
   ghc-options:         -Wall
                        -Wcompat
