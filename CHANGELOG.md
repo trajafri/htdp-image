@@ -1,5 +1,11 @@
 # Revision history for htdp-image
 
+## 0.2.2.0 -- 2019-07-13
+
+* Added rectangle, square, and ellipse
+* Access to Image data type
+
+
 ## 0.2.1.0 -- 2019-07-11
 
 * Added triangle
