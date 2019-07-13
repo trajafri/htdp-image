@@ -2,7 +2,6 @@ module Graphics.Shape
   ( Mode(..)
   , circle
   , ellipse
-  , line
   , rectangle
   , square
   , triangle
@@ -38,12 +37,6 @@ ellipse w h m c = Image { width  = w * 2
   circleToEllipse = G.scale (w / radius) (h / radius) circPic
   circPic         = fst . head . shapes $ circle radius m c
   radius          = (w + h) / 2
-
-line :: Float -> Float -> Image
-line x y = Image { width  = abs x
-                 , height = abs y
-                 , shapes = [(G.line [(x, 0), (0, y)], (0, 0))]
-                 }
 
 rectangle :: Float -> Float -> Mode -> Color -> Image
 rectangle w h mode c = Image { width  = w
