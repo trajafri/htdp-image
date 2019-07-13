@@ -2,7 +2,7 @@
 
 htdp-image is a simple graphics library inspired by [Racket](https://racket-lang.org/)'s [2htdp/image](https://docs.racket-lang.org/teachpack/2htdpimage.html) library.
 
-Under the hood, it is currently a wrapper on top of Gloss, another easy to use graphics library, but htdp-image
+Under the hood, it is currently a wrapper on top of [Gloss](http://gloss.ouroborus.net/), another easy to use graphics library, but htdp-image
 makes drawing objects even easier for beginners.
 
 In the future, if it seems like Gloss is limiting the features this library wishes
