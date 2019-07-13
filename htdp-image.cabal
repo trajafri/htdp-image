@@ -18,12 +18,12 @@ description:
   to use graphics library but htdp-image makes drawing objects even easier for beginners.
 
 library
-  exposed-modules:     Graphics.Htdp
+  exposed-modules:     Graphics.Htdp,
+                       Graphics.Data.Image
   other-modules:       Graphics.Shape,
                        Graphics.Combinator,
-                       Graphics.Data.Image
                        Graphics.Util.Arithmetic
-  build-depends:       base >=4.12 && <4.13,
+  build-depends:       base ^>=4.12,
                        gloss ^>=1.13.0
   hs-source-dirs:      src
   ghc-options:         -Wall
@@ -32,3 +32,23 @@ library
                        -Wincomplete-uni-patterns
                        -Wredundant-constraints
   default-language:    Haskell2010
+
+test-suite htdp-tests
+  type:                exitcode-stdio-1.0
+  main-is:             Main.hs
+  other-modules:       ShapeTest,
+                       CombinatorTest
+  build-depends:       base ^>=4.12,
+                       gloss ^>=1.13.0,
+                       htdp-image,
+                       HUnit ^>=1.6.0,
+                       test-framework ^>=0.8.2,
+                       test-framework-hunit ^>=0.3.0
+  hs-source-dirs:      tests
+  ghc-options:         -Wall
+                       -Wcompat
+                       -Wincomplete-record-updates
+                       -Wincomplete-uni-patterns
+                       -Wredundant-constraints
+  default-language:    Haskell2010
+
