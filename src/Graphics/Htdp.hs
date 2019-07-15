@@ -18,6 +18,9 @@ import           Graphics.Shape
 drawImage :: Image -> IO ()
 drawImage i =
   G.display
-      (G.InWindow "htdp-image" (round . width $ i, round . height $ i) (0, 0))
+      (G.InWindow "htdp-image"
+                  (succ . round . width $ i, succ . round . height $ i)
+                  (0                       , 0)
+      )
       G.white
     $ G.Pictures (map (\(p, (x, y)) -> G.translate x y p) (shapes i))

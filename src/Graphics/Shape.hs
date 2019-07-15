@@ -2,6 +2,7 @@ module Graphics.Shape
   ( Mode(..)
   , circle
   , ellipse
+  , line
   , rectangle
   , square
   , triangle
@@ -37,6 +38,16 @@ ellipse w h m c = Image { width  = w * 2
   circleToEllipse = G.scale (w / radius) (h / radius) circPic
   circPic         = fst . head . shapes $ circle radius m c
   radius          = (w + h) / 2
+
+line :: Float -> Float -> Color -> Image
+line x y c = Image { width  = abs x
+                   , height = abs y
+                   , shapes = [(G.Color c $ G.Line lineShape, origin)]
+                   }
+  -- We want the line centered on the origin.
+  -- For that, we will need to move the given points
+  -- (I had to take a day off to get this)
+  where lineShape = [(x / 2, negate y / 2), (negate x / 2, y / 2)]
 
 rectangle :: Float -> Float -> Mode -> Color -> Image
 rectangle w h mode c = Image { width  = w

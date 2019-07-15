@@ -1,5 +1,11 @@
 # Revision history for htdp-image
 
+## 0.2.3.0 -- 2019-07-14
+
+* Added line
+* Fixed drawImage (crashed if width or height was zero)
+
+
 ## 0.2.2.0 -- 2019-07-13
 
 * Added rectangle, square, and ellipse
