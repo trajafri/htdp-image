@@ -2,13 +2,16 @@ module Graphics.Shape
   ( Mode(..)
   , circle
   , ellipse
+  , emptyImage
   , line
   , rectangle
+  , rhombus
   , square
   , triangle
   )
 where
 
+import           Data.Angle
 import           Graphics.Data.Image
 import qualified Graphics.Gloss                as G
 import           Graphics.Gloss.Data.Color
@@ -39,10 +42,13 @@ ellipse w h m c = Image { width  = w * 2
   circPic         = fst . head . shapes $ circle radius m c
   radius          = (w + h) / 2
 
+emptyImage :: Image
+emptyImage = Image 0 0 []
+
 line :: Float -> Float -> Color -> Image
 line x y c = Image { width  = abs x
                    , height = abs y
-                   , shapes = [(G.Color c $ G.Line lineShape, origin)]
+                   , shapes = [(G.color c $ G.Line lineShape, origin)]
                    }
   -- We want the line centered on the origin.
   -- For that, we will need to move the given points
@@ -58,6 +64,21 @@ rectangle w h mode c = Image { width  = w
   rectShape = case mode of
     Solid   -> G.rectangleSolid
     Outline -> G.rectangleWire
+
+rhombus :: Float -> Float -> Mode -> Color -> Image
+rhombus sideLength angle m c = Image { width  = base
+                                     , height = opp
+                                     , shapes = [(G.color c $ rShape, origin)]
+                                     }
+ where
+  -- It's the law of Cosine bb
+  base = (2 * (sideLength ** 2) * (1 - (cosine . Degrees $ angle))) ** (1 / 2)
+  opp  = 2 * computeRightSide sideLength (base / 2)
+  rhombusShape =
+    [(negate base / 2, 0), (0, opp / 2), (base / 2, 0), (0, negate opp / 2)]
+  rShape = case m of
+    Solid   -> G.polygon rhombusShape
+    Outline -> G.line ((0, negate opp / 2) : rhombusShape)
 
 square :: Float -> Mode -> Color -> Image
 square w = rectangle w w

@@ -1,5 +1,10 @@
 # Revision history for htdp-image
 
+
+## 0.2.4.0 -- 2019-07-14
+
+* Added empty-image and rhombus
+
 ## 0.2.3.0 -- 2019-07-14
 
 * Added line

@@ -1,5 +1,5 @@
 name:                  htdp-image
-version:               0.2.3.0
+version:               0.2.4.0
 license:               BSD3
 license-file:          LICENSE
 author:                Turab Jafri
@@ -23,7 +23,8 @@ library
   other-modules:       Graphics.Shape,
                        Graphics.Combinator,
                        Graphics.Util.Arithmetic
-  build-depends:       base ^>=4.12,
+  build-depends:       AC-Angle ^>=1.0,
+                       base ^>=4.12,
                        gloss ^>=1.13.0
   hs-source-dirs:      src
   ghc-options:         -Wall
