@@ -2,6 +2,8 @@ module Graphics.Combinator
   ( above
   , beside
   , placeImage
+  , overlay
+  , underlay
   )
 where
 
@@ -35,3 +37,9 @@ placeImage i1 x y i2 = Image
   , shapes = shapes i2
                ++ (map (\(p, (ox, oy)) -> (p, (ox + x, oy + y))) $ shapes i1)
   }
+
+overlay :: Image -> Image -> Image
+overlay i1 i2 = placeImage i1 0 0 i2
+
+underlay :: Image -> Image -> Image
+underlay = flip overlay
