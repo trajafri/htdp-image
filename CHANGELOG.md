@@ -1,5 +1,9 @@
 # Revision history for htdp-image
 
+## 0.2.5.0 -- 2019-07-14
+
+* Added overlay and underlay
+
 
 ## 0.2.4.0 -- 2019-07-14
 
