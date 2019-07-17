@@ -30,3 +30,4 @@ Some differences are a side effect of using Gloss as the base of this library (w
   htdp-image doesn't have that feature so every image is drawn in a new window.
 * empty-scene is basically the same as a rectangle (or, there is no concept of scene as it is in 2htdp/image).
 * Non-convex polygons are glitchy, thanks to OpenGL.
+* placeImage does not crop part of images that lay outside the dimensions of the image they are being placed on top of.
