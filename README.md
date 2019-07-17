@@ -16,7 +16,7 @@ This library uses the [combinator pattern](https://wiki.haskell.org/Combinator_p
 To draw five circles beside each other:
 
 ```haskell
-drawImage $ foldr1 beside $ replicate 5 (circle 20 Solid red)
+drawImage $ foldr1 beside $ replicate 5 (circle 20 solid red)
 ```
 
 ![alt text](https://raw.githubusercontent.com/trajafri/htdp-image/master/example-images/beside.png "Four circles beside each other")
@@ -25,7 +25,7 @@ drawImage $ foldr1 beside $ replicate 5 (circle 20 Solid red)
 To draw five circles above each other:
 
 ```haskell
-drawImage $ foldr1 above $ replicate 5 (circle 20 Solid red)
+drawImage $ foldr1 above $ replicate 5 (circle 20 solid red)
 ```
  
 ![alt text](https://raw.githubusercontent.com/trajafri/htdp-image/master/example-images/above.png "Four circles above each other")
@@ -36,8 +36,8 @@ To draw four circles stacked on top of each other (2 on 2):
 ```haskell
 drawImage $ above (beside redCirc blueCirc) (beside blueCirc redCirc)
  where
-  redCirc  = (circle 20 Solid red)
-  blueCirc = (circle 20 Solid blue)
+  redCirc  = (circle 20 solid red)
+  blueCirc = (circle 20 solid blue)
 ```
 
 ![alt text](https://raw.githubusercontent.com/trajafri/htdp-image/master/example-images/above-beside.png "Two circles stacked on each other")
@@ -46,7 +46,7 @@ drawImage $ above (beside redCirc blueCirc) (beside blueCirc redCirc)
 To draw four iterations of the sierpinski triangle (don't try super big iterations!):
 
 ```haskell
-drawImage $ sier . sier . sier . sier $ (triangle 20 Solid red)
+drawImage $ sier . sier . sier . sier $ (triangle 20 solid red)
  where
   sier t = above t $ beside t t
 ```
