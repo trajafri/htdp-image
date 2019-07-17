@@ -8,6 +8,7 @@ module Graphics.Combinator
 where
 
 import           Graphics.Data.Image
+import           Graphics.Util.Arithmetic
 
 above :: Image -> Image -> Image
 above i1 i2 = Image
@@ -34,9 +35,13 @@ placeImage :: Image -> Float -> Float -> Image -> Image
 placeImage i1 x y i2 = Image
   { width  = width i2 -- Assuming that i2 is base (just like in htdp/image)
   , height = height i2
-  , shapes = shapes i2
-               ++ (map (\(p, (ox, oy)) -> (p, (ox + x, oy + y))) $ shapes i1)
+  , shapes =
+    shapes i2
+      ++ (map (\(p, (ox, oy)) -> (p, (ox + newX, oy + newY))) $ shapes i1)
   }
+ where
+  newX = convert 0 (negate $ (width i2) / 2) (width i2) ((width i2) / 2) x
+  newY = convert 0 ((height i2) / 2) (height i2) (negate $ (height i2) / 2) y
 
 overlay :: Image -> Image -> Image
 overlay i1 i2 = placeImage i1 0 0 i2

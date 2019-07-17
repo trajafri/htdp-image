@@ -1,5 +1,10 @@
 # Revision history for htdp-image
 
+## 0.3.0.0 -- 2019-07-16
+
+* Change coordinate system to screen coordinate system!
+
+
 ## 0.2.6.0 -- 2019-07-16
 
 * Added star

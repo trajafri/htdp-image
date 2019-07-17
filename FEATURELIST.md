@@ -24,7 +24,7 @@ Only the following 2htdp/image functions have been ported so far:
 
 Some differences are a side effect of using Gloss as the base of this library (which may be corrected).
 
-* The default coordinate system is Cartesian instead of the Screen Coordinate System.
+* The default coordinate system is Cartesian instead of the Screen Coordinate System (this may be fixed now? haven't tested properly).
 * Usually, 2htdp/image is used on the DrRacket IDE, which treats images as bitmap images
   (and even draws them there!).
   htdp-image doesn't have that feature so every image is drawn in a new window.
