@@ -7,11 +7,13 @@ module Graphics.Shape
   , rectangle
   , rhombus
   , square
+  , star
   , triangle
   )
 where
 
 import           Data.Angle
+import           Data.List
 import           Graphics.Data.Image
 import qualified Graphics.Gloss                as G
 import           Graphics.Gloss.Data.Color
@@ -82,6 +84,40 @@ rhombus sideLength angle m c = Image { width  = base
 
 square :: Float -> Mode -> Color -> Image
 square w = rectangle w w
+
+star :: Float -> Mode -> Color -> Image
+star side m c = Image { width  = w
+                      , height = h
+                      , shapes = [(G.color c sShape, origin)]
+                      }
+ where
+    -- Pentagon is 108degs apart
+  w          = (2 * triHyp) + side
+  h          = (1.539 * side) + triPerp + bottomPerp
+  triHyp     = (sine . Degrees $ 72) * (side / (sine . Degrees $ 36))
+  triPerp    = computeRightSide triHyp (side / 2)
+  bottomPerp = computeRightSide triHyp (bottom / 2)
+  bottom     = (2 * (triHyp ** 2) * (1 - (cosine . Degrees $ 108))) ** (1 / 2)
+  sShape     = case m of
+    Solid ->
+      G.polygon
+        $ concatMap id
+        . transpose
+        $ [[bLeftSt, bRightSt, rightSt, topSt, leftSt], pentPoints]
+    Outline -> G.line (rightSt : starPoints) -- Some hack to fix solid
+  starPoints = [bLeftSt, topSt, bRightSt, leftSt, rightSt]
+  topSt      = (0, h / 2)
+  leftSt     = (negate (w / 2), (h / 2) - triPerp)
+  rightSt    = (negate . fst $ leftSt, snd leftSt)
+  bLeftSt    = (negate (bottom / 2), negate (h / 2))
+  bRightSt   = (negate . fst $ bLeftSt, snd bLeftSt)
+  pentPoints = [bottomP, bRightP, rightP, leftP, bLeftP]
+  bottomP    = (0, negate $ h / 2 - bottomPerp)
+  leftP      = (negate $ side / 2, snd leftSt)
+  rightP     = (negate . fst $ leftP, snd leftP)
+  bLeftP     = (negate midPerp, negate $ h / 2 - (bottomPerp + midPerp))
+  bRightP    = (negate . fst $ bLeftP, snd bLeftP)
+  midPerp    = computeRightSide side $ (1.618 * side) / 2
 
 triangle :: Float -> Mode -> Color -> Image
 triangle sideLength mode c = Image
