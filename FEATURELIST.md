@@ -16,6 +16,7 @@ Only the following 2htdp/image functions have been ported so far:
 * [rectangle](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._rectangle%29%29)
 * [rhombus](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._rhombus%29%29)
 * [square](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._square%29%29)
+* [star](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._star%29%29)
 * [triangle](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._triangle%29%29)
 * [underlay](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._underlay%29%29)
 
@@ -28,3 +29,4 @@ Some differences are a side effect of using Gloss as the base of this library (w
   (and even draws them there!).
   htdp-image doesn't have that feature so every image is drawn in a new window.
 * empty-scene is basically the same as a rectangle (or, there is no concept of scene as it is in 2htdp/image).
+* Non-convex polygons are glitchy, thanks to OpenGL.

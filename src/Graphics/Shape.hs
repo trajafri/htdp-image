@@ -21,7 +21,7 @@ import qualified Graphics.Gloss                as G
 import           Graphics.Gloss.Data.Color
 import           Graphics.Util.Arithmetic
 
-data Mode = Solid | Outline deriving (Show, Eq)
+data Mode = Solid | Outline deriving Eq
 
 solid, outline :: Mode
 solid = Solid

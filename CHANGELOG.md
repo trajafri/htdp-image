@@ -1,5 +1,11 @@
 # Revision history for htdp-image
 
+## 0.2.6.0 -- 2019-07-16
+
+* Added star
+* Provide alias for Solid and Outline
+
+
 ## 0.2.5.0 -- 2019-07-14
 
 * Added overlay and underlay
