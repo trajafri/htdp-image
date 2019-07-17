@@ -46,7 +46,7 @@ drawImage $ above (beside redCirc blueCirc) (beside blueCirc redCirc)
 To draw four iterations of the sierpinski triangle (don't try super big iterations!):
 
 ```haskell
-drawImage $ foldr (const sier) (triangle 20 Solid red) [1, 2, 3, 4]
+drawImage $ sier . sier . sier . sier $ (triangle 20 Solid red)
  where
   sier t = above t $ beside t t
 ```
