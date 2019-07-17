@@ -44,7 +44,7 @@ placeImage i1 x y i2 = Image
   newY = convert 0 ((height i2) / 2) (height i2) (negate $ (height i2) / 2) y
 
 overlay :: Image -> Image -> Image
-overlay i1 i2 = placeImage i1 0 0 i2
+overlay i1 i2 = placeImage i1 ((width i2) / 2) ((height i2) / 2) i2
 
 underlay :: Image -> Image -> Image
 underlay = flip overlay
