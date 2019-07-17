@@ -1,11 +1,13 @@
 module Graphics.Shape
-  ( Mode(..)
+  ( Mode
   , circle
   , ellipse
   , emptyImage
   , line
+  , outline
   , rectangle
   , rhombus
+  , solid
   , square
   , star
   , triangle
@@ -20,6 +22,11 @@ import           Graphics.Gloss.Data.Color
 import           Graphics.Util.Arithmetic
 
 data Mode = Solid | Outline deriving (Show, Eq)
+
+solid, outline :: Mode
+solid = Solid
+outline = Outline
+
 
 origin :: G.Point
 origin = (0, 0)
