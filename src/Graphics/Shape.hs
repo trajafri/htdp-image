@@ -42,14 +42,14 @@ circle r mode c = Image { width  = r * 2
     Outline -> G.circle
 
 ellipse :: Float -> Float -> Mode -> Color -> Image
-ellipse w h m c = Image { width  = w * 2
-                        , height = h * 2
+ellipse w h m c = Image { width  = w
+                        , height = h
                         , shapes = [(circleToEllipse, origin)]
                         }
  where -- This took me longer than it should have
-  circleToEllipse = G.scale (w / radius) (h / radius) circPic
+  circleToEllipse = G.scale (w / (2 * radius)) (h / (2 * radius)) circPic
   circPic         = fst . head . shapes $ circle radius m c
-  radius          = (w + h) / 2
+  radius          = (w + h) / 4
 
 emptyImage :: Image
 emptyImage = Image 0 0 []

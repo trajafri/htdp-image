@@ -1,6 +1,11 @@
 module Graphics.Combinator
   ( above
+  , Alignment
   , beside
+  , besideAlign
+  , high
+  , low
+  , mid
   , placeImage
   , overlay
   , underlay
@@ -9,12 +14,21 @@ where
 
 import           Graphics.Data.Image
 import           Graphics.Util.Arithmetic
+import           Prelude                 hiding ( Left
+                                                , Right
+                                                )
+
+data Alignment = Low | Mid | High
+
+low, mid, high :: Alignment
+low = Low
+mid = Mid
+high = High
 
 above :: Image -> Image -> Image
 above i1 i2 = Image
   { width  = max (width i1) (width i2)
   , height = (height i1) + (height i2)
---                                 Gloss' y seems to be positive upwards :/
   , shapes = (map (\(p, (x, y)) -> (p, (x, y + (height i2 / 2)))) $ shapes i1)
                ++ ( map (\(p, (x, y)) -> (p, (x, y - (height i1 / 2))))
                   $ shapes i2
@@ -22,14 +36,23 @@ above i1 i2 = Image
   }
 
 beside :: Image -> Image -> Image
-beside i1 i2 = Image
+beside = besideAlign mid
+
+besideAlign :: Alignment -> Image -> Image -> Image
+besideAlign a i1 i2 = Image
   { width  = (width i1) + (width i2)
   , height = max (height i1) (height i2)
   , shapes = (map (\(p, (x, y)) -> (p, (x - (width i2 / 2), y))) $ shapes i1)
-               ++ ( map (\(p, (x, y)) -> (p, (x + (width i1 / 2), y)))
+               ++ ( map (\(p, (x, y)) -> (p, (x + (width i1 / 2), y + offset)))
                   $ shapes i2
                   )
   }
+ where
+  offset = case a of
+    Low  -> (negate $ (height i1) - (height i2)) / 2
+    Mid  -> 0
+    High -> ((height i1) - (height i2)) / 2
+
 
 placeImage :: Image -> Float -> Float -> Image -> Image
 placeImage i1 x y i2 = Image
