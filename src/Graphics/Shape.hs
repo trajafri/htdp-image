@@ -77,7 +77,7 @@ rectangle w h mode c = Image { width  = w
 rhombus :: Float -> Float -> Mode -> Color -> Image
 rhombus sideLength angle m c = Image { width  = base
                                      , height = opp
-                                     , shapes = [(G.color c $ rShape, origin)]
+                                     , shapes = [(G.color c rShape, origin)]
                                      }
  where
   -- It's the law of Cosine bb
@@ -108,7 +108,7 @@ star side m c = Image { width  = w
   sShape     = case m of
     Solid ->
       G.polygon
-        $ concatMap id
+        $ concat
         . transpose
         $ [[bLeftSt, bRightSt, rightSt, topSt, leftSt], pentPoints]
     Outline -> G.line (rightSt : starPoints) -- Some hack to fix solid
@@ -130,16 +130,13 @@ triangle :: Float -> Mode -> Color -> Image
 triangle sideLength mode c = Image
   { width  = tW
   , height = tH
-  , shapes = [(G.color c $ triangleShape, origin)]
+  , shapes = [(G.color c triangleShape, origin)]
   }
  where
   tW = sideLength
   tH = computeRightSide tW (sideLength / 2)
   tShape = --left, right, top
-    [ ((negate $ tW / 2), negate $ tH / 2)
-    , (tW / 2           , negate $ tH / 2)
-    , (0                , tH / 2)
-    ]
+    [(negate $ tW / 2, negate $ tH / 2), (tW / 2, negate $ tH / 2), (0, tH / 2)]
   triangleShape = case mode of
     Solid   -> G.polygon tShape
     Outline -> G.line ((0, tH / 2) : tShape)

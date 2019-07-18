@@ -32,9 +32,9 @@ high = High
 
 imageOffset :: (Image -> Float) -> Alignment -> Image -> Image -> Float
 imageOffset dim al i1 i2 = case al of
-  Low  -> (negate $ (dim i1) - (dim i2)) / 2
+  Low  -> negate $ dim i1 - dim i2 / 2
   Mid  -> 0
-  High -> ((dim i1) - (dim i2)) / 2
+  High -> (dim i1 - dim i2) / 2
 
 above :: Image -> Image -> Image
 above = aboveAlign mid
@@ -45,7 +45,7 @@ aboves = foldr1 above
 aboveAlign :: Alignment -> Image -> Image -> Image
 aboveAlign a i1 i2 = Image
   { width  = max (width i1) (width i2)
-  , height = (height i1) + (height i2)
+  , height = height i1 + height i2
   , shapes = [ (p, (x, y + (height i2 / 2))) | (p, (x, y)) <- shapes i1 ]
                ++ [ (p, (x + offset, y - (height i1 / 2)))
                   | (p, (x, y)) <- shapes i2
@@ -61,7 +61,7 @@ besides = foldr1 beside
 
 besideAlign :: Alignment -> Image -> Image -> Image
 besideAlign a i1 i2 = Image
-  { width  = (width i1) + (width i2)
+  { width  = width i1 + width i2
   , height = max (height i1) (height i2)
   , shapes = [ (p, (x - (width i2 / 2), y)) | (p, (x, y)) <- shapes i1 ]
                ++ [ (p, (x + (width i1 / 2), y + offset))
@@ -71,7 +71,7 @@ besideAlign a i1 i2 = Image
   where offset = imageOffset height a i1 i2
 
 placeImage :: Image -> Float -> Float -> Image -> Image
-placeImage i1 x y i2 = placeImageAlign i1 x y mid mid i2
+placeImage i1 x y = placeImageAlign i1 x y mid mid
 
 placeImages :: [Image] -> [(Float, Float)] -> Image -> Image
 placeImages is ps base =
@@ -88,23 +88,23 @@ placeImageAlign i1 x y xAl yAl i2 = Image
                   ]
   }
  where
-  newX    = convert 0 (negate $ (width i2) / 2) (width i2) ((width i2) / 2) x
-  newY    = convert 0 ((height i2) / 2) (height i2) (negate $ (height i2) / 2) y
+  newX    = convert 0 (negate $ width i2 / 2) (width i2) (width i2 / 2) x
+  newY    = convert 0 (height i2 / 2) (height i2) (negate $ height i2 / 2) y
   xOffset = shiftImage width xAl
   yOffset = shiftImage height yAl
   shiftImage dim a = case a of
-    Low  -> (dim i1) / 2
+    Low  -> dim i1 / 2
     Mid  -> 0
-    High -> negate $ (dim i1) / 2
+    High -> negate $ dim i1 / 2
 
 overlay :: Image -> Image -> Image
-overlay i1 i2 = placeImage i1 ((width i2) / 2) ((height i2) / 2) i2
+overlay i1 i2 = placeImage i1 (width i2 / 2) (height i2 / 2) i2
 
 overlayAlign :: Alignment -> Alignment -> Image -> Image -> Image
 overlayAlign xAl yAl i1 = overlayAlignOffset xAl yAl i1 0 0
 
 overlayOffset :: Image -> Float -> Float -> Image -> Image
-overlayOffset i1 x y = overlayAlignOffset mid mid i1 x y
+overlayOffset = overlayAlignOffset mid mid
 
 overlayXY :: Image -> Float -> Float -> Image -> Image
 overlayXY = overlayOffset
@@ -112,7 +112,7 @@ overlayXY = overlayOffset
 overlayAlignOffset
   :: Alignment -> Alignment -> Image -> Float -> Float -> Image -> Image
 overlayAlignOffset xAl yAl i1 x y i2 =
-  placeImageAlign i1 (x + ((width i2) / 2)) (y + ((height i2) / 2)) xAl yAl i2
+  placeImageAlign i1 (x + (width i2 / 2)) (y + (height i2 / 2)) xAl yAl i2
 
 underlay :: Image -> Image -> Image
 underlay = flip overlay
