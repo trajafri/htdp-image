@@ -35,3 +35,10 @@ Some differences are a side effect of using Gloss as the base of this library (w
 * empty-scene is basically the same as a rectangle (or, there is no concept of scene as it is in 2htdp/image).
 * Non-convex polygons are glitchy, thanks to OpenGL.
 * placeImage does not crop part of images that lay outside the dimensions of the image they are being placed on top of.
+* Since placeImage does not crop parts of image out of bounds, we have two options.
+  - We ignore the parts out of bounds
+  - We increase the bounds so that the binding box contains both images
+  I think option two sounds better, and will result in placeImage behaving similar to overlay/underlay
+  (in 2htdp/image, the difference is that overlay/underlay increase the binding box, while placeImage crops
+   parts outside of the binding box)
+* I don't think cropping will be supported, unless there is some hacky way of simulating cropping.

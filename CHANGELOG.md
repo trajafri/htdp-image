@@ -1,5 +1,10 @@
 # Revision history for htdp-image
 
+## 0.3.1.0 -- 2019-07-17
+
+* Add aboveAlign, besideAlign, placeImageAlign, besides, aboves, and placeImages
+* Fix overlay/underlay (assumed that (0, 0) was always the center of an image)
+
 ## 0.3.0.0 -- 2019-07-16
 
 * Change coordinate system to screen coordinate system!
