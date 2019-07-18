@@ -1,13 +1,16 @@
 module Graphics.Combinator
   ( above
+  , aboves
   , aboveAlign
   , Alignment
   , beside
+  , besides
   , besideAlign
   , high
   , low
   , mid
   , placeImage
+  , placeImages
   , placeImageAlign
   , overlay
   , underlay
@@ -36,6 +39,9 @@ imageOffset dim al i1 i2 = case al of
 above :: Image -> Image -> Image
 above = aboveAlign mid
 
+aboves :: [Image] -> Image
+aboves = foldr1 above
+
 aboveAlign :: Alignment -> Image -> Image -> Image
 aboveAlign a i1 i2 = Image
   { width  = max (width i1) (width i2)
@@ -50,6 +56,9 @@ aboveAlign a i1 i2 = Image
 beside :: Image -> Image -> Image
 beside = besideAlign mid
 
+besides :: [Image] -> Image
+besides = foldr1 beside
+
 besideAlign :: Alignment -> Image -> Image -> Image
 besideAlign a i1 i2 = Image
   { width  = (width i1) + (width i2)
@@ -63,6 +72,10 @@ besideAlign a i1 i2 = Image
 
 placeImage :: Image -> Float -> Float -> Image -> Image
 placeImage i1 x y i2 = placeImageAlign i1 x y mid mid i2
+
+placeImages :: [Image] -> [(Float, Float)] -> Image -> Image
+placeImages is ps base =
+  foldr (\(i1, (x, y)) i2 -> placeImage i1 x y i2) base $ zip is ps
 
 placeImageAlign
   :: Image -> Float -> Float -> Alignment -> Alignment -> Image -> Image
