@@ -67,7 +67,7 @@ placeImage i1 x y i2 = placeImageAlign i1 x y mid mid i2
 placeImageAlign
   :: Image -> Float -> Float -> Alignment -> Alignment -> Image -> Image
 placeImageAlign i1 x y xAl yAl i2 = Image
-  { width  = width i2 -- Assuming that i2 is base (just like in htdp/image)
+  { width  = width i2
   , height = height i2
   , shapes = shapes i2
                ++ [ (p, (ox + newX + xOffset, oy + newY + yOffset))
@@ -87,5 +87,32 @@ placeImageAlign i1 x y xAl yAl i2 = Image
 overlay :: Image -> Image -> Image
 overlay i1 i2 = placeImage i1 ((width i2) / 2) ((height i2) / 2) i2
 
+overlayAlign :: Alignment -> Alignment -> Image -> Image -> Image
+overlayAlign xAl yAl i1 = overlayAlignOffset xAl yAl i1 0 0
+
+overlayOffset :: Image -> Float -> Float -> Image -> Image
+overlayOffset i1 x y = overlayAlignOffset mid mid i1 x y
+
+overlayXY :: Image -> Float -> Float -> Image -> Image
+overlayXY = overlayOffset
+
+overlayAlignOffset
+  :: Alignment -> Alignment -> Image -> Float -> Float -> Image -> Image
+overlayAlignOffset xAl yAl i1 x y i2 =
+  placeImageAlign i1 (x + ((width i2) / 2)) (y + ((height i2) / 2)) xAl yAl i2
+
 underlay :: Image -> Image -> Image
 underlay = flip overlay
+
+underlayAlign :: Alignment -> Alignment -> Image -> Image -> Image
+underlayAlign xAl yAl i1 i2 = overlayAlign xAl yAl i2 i1
+
+underlayOffset :: Image -> Float -> Float -> Image -> Image
+underlayOffset i1 x y i2 = overlayOffset i2 x y i1
+
+underlayAlignOffset
+  :: Alignment -> Alignment -> Image -> Float -> Float -> Image -> Image
+underlayAlignOffset xAl yAl i1 x y i2 = overlayAlignOffset xAl yAl i2 x y i1
+
+underlayXY :: Image -> Float -> Float -> Image -> Image
+underlayXY = underlayOffset
