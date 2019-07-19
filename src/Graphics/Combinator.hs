@@ -79,53 +79,80 @@ placeImages is ps base =
 
 placeImageAlign
   :: Image -> Float -> Float -> Alignment -> Alignment -> Image -> Image
-placeImageAlign i1 x y xAl yAl i2 = Image
-  { width  = width i2
-  , height = height i2
-  , shapes = shapes i2
-               ++ [ (p, (ox + newX + xOffset, oy + newY + yOffset))
-                  | (p, (ox, oy)) <- shapes i1
-                  ]
-  }
+placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
+                                          , height = newH
+                                          , shapes = newShapes
+                                          }
  where
-  newX    = convert 0 (negate $ width i2 / 2) (width i2) (width i2 / 2) x
-  newY    = convert 0 (height i2 / 2) (height i2) (negate $ height i2 / 2) y
+  newW = max (width i2) $ max (width i1) $ if incWCase
+    then (width i1 / 2) + (abs newX) + (width i2 / 2)
+    else 0
+  newH = max (height i2) $ max (height i1) $ if incHCase
+    then (height i1 / 2) + (abs newY) + (height i2 / 2)
+    else 0
+  incWCase = (abs newX) + (width i1 / 2) > (width i2 / 2)
+  incHCase = (abs newY) + (height i1 / 2) > (height i2 / 2)
+  newX =
+    convert 0 (negate $ width i2 / 2) (width i2) (width i2 / 2) x + xOffset
+  newY =
+    convert 0 (height i2 / 2) (height i2) (negate $ height i2 / 2) y + yOffset
   xOffset = shiftImage width xAl
   yOffset = shiftImage height yAl
   shiftImage dim a = case a of
     Low  -> dim i1 / 2
     Mid  -> 0
     High -> negate $ dim i1 / 2
+  newShapes
+    | newW == width i1 && newH == height i1
+    = shapes i1
+    | newW == width i2 && newH == height i2
+    = shapes i2
+      ++ [ (p, (ox + newX + xOffset, oy + newY + yOffset))
+         | (p, (ox, oy)) <- shapes i1
+         ]
+    | otherwise
+    = [ (p, (x2 + (xDir * xShift), y2 + (yDir * yShift)))
+      | (p, (x2, y2)) <- shapes i2
+      ]
+      ++ [ (p, (x1 + (negate xDir * xShift), y1 + (negate yDir * yShift)))
+         | (p, (x1, y1)) <- shapes i1
+         ]
+  xShift = if incWCase then xDir * newX / 2 else 0
+  yShift = if incHCase then yDir * newY / 2 else 0
+  xDir   = if incWCase && newX > 0 then -1 else 1
+  yDir   = if incHCase && newY > 0 then -1 else 1
+
+
 
 overlay :: Image -> Image -> Image
 overlay i1 i2 = placeImage i1 (width i2 / 2) (height i2 / 2) i2
 
-overlayAlign :: Alignment -> Alignment -> Image -> Image -> Image
-overlayAlign xAl yAl i1 = overlayAlignOffset xAl yAl i1 0 0
-
-overlayOffset :: Image -> Float -> Float -> Image -> Image
-overlayOffset = overlayAlignOffset mid mid
-
-overlayXY :: Image -> Float -> Float -> Image -> Image
-overlayXY = overlayOffset
-
-overlayAlignOffset
-  :: Alignment -> Alignment -> Image -> Float -> Float -> Image -> Image
-overlayAlignOffset xAl yAl i1 x y i2 =
-  placeImageAlign i1 (x + (width i2 / 2)) (y + (height i2 / 2)) xAl yAl i2
+--overlayAlign :: Alignment -> Alignment -> Image -> Image -> Image
+--overlayAlign xAl yAl i1 = overlayAlignOffset xAl yAl i1 0 0
+--
+--overlayOffset :: Image -> Float -> Float -> Image -> Image
+--overlayOffset = overlayAlignOffset mid mid
+--
+--overlayXY :: Image -> Float -> Float -> Image -> Image
+--overlayXY = overlayOffset
+--
+--overlayAlignOffset
+--  :: Alignment -> Alignment -> Image -> Float -> Float -> Image -> Image
+--overlayAlignOffset xAl yAl i1 x y i2 =
+--  placeImageAlign i1 (x + (width i2 / 2)) (y + (height i2 / 2)) xAl yAl i2
 
 underlay :: Image -> Image -> Image
 underlay = flip overlay
 
-underlayAlign :: Alignment -> Alignment -> Image -> Image -> Image
-underlayAlign xAl yAl i1 i2 = overlayAlign xAl yAl i2 i1
-
-underlayOffset :: Image -> Float -> Float -> Image -> Image
-underlayOffset i1 x y i2 = overlayOffset i2 x y i1
-
-underlayAlignOffset
-  :: Alignment -> Alignment -> Image -> Float -> Float -> Image -> Image
-underlayAlignOffset xAl yAl i1 x y i2 = overlayAlignOffset xAl yAl i2 x y i1
-
-underlayXY :: Image -> Float -> Float -> Image -> Image
-underlayXY = underlayOffset
+--underlayAlign :: Alignment -> Alignment -> Image -> Image -> Image
+--underlayAlign xAl yAl i1 i2 = overlayAlign xAl yAl i2 i1
+--
+--underlayOffset :: Image -> Float -> Float -> Image -> Image
+--underlayOffset i1 x y i2 = overlayOffset i2 x y i1
+--
+--underlayAlignOffset
+--  :: Alignment -> Alignment -> Image -> Float -> Float -> Image -> Image
+--underlayAlignOffset xAl yAl i1 x y i2 = overlayAlignOffset xAl yAl i2 x y i1
+--
+--underlayXY :: Image -> Float -> Float -> Image -> Image
+--underlayXY = underlayOffset
