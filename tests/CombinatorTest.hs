@@ -118,15 +118,15 @@ placeImageSizeTest = TestCase $ sequence_
   [ assertEqual (placeImageXError ++ i) expW (width pic)
       >> assertEqual (placeImageYError ++ i) expH (height pic)
   | (i, expW, expH, pic) <-
-    [ ("0", 50, 50, placeImage image1 0 0 image1)
-    , ("1", 10, 50, placeImage image1 0 0 image2)
-    , ("2", 50, 10, placeImage image1 0 0 image3)
-    , ("3", 50, 50, placeImage image2 0 0 image1)
-    , ("4", 10, 50, placeImage image2 0 0 image2)
-    , ("5", 50, 50, placeImage image2 0 0 image3)
-    , ("6", 50, 50, placeImage image3 0 0 image1)
-    , ("7", 50, 50, placeImage image3 0 0 image2)
-    , ("8", 50, 10, placeImage image3 0 0 image3)
+    [ ("0", 50, 50, placeImage image1 25 25 image1)
+    , ("1", 10, 50, placeImage image1 5 25 image2)
+    , ("2", 50, 10, placeImage image1 25 5 image3)
+    , ("3", 50, 50, placeImage image2 25 25 image1)
+    , ("4", 10, 50, placeImage image2 5 25 image2)
+    , ("5", 50, 50, placeImage image2 25 5 image3)
+    , ("6", 50, 50, placeImage image3 25 25 image1)
+    , ("7", 50, 50, placeImage image3 5 25 image2)
+    , ("8", 50, 10, placeImage image3 25 5 image3)
     ]
   ]
 
