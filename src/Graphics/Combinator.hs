@@ -1,4 +1,4 @@
-{-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE MultiWayIf, RecordWildCards #-}
 
 module Graphics.Combinator
   ( above
@@ -16,12 +16,16 @@ module Graphics.Combinator
   , placeImage
   , placeImages
   , placeImageAlign
+  , rotate
   , underlay
   , underlayOffset
   )
 where
 
+import           Data.Angle
+import           Data.Fixed
 import           Graphics.Data.Image
+import qualified Graphics.Gloss                as G
 import           Graphics.Util.Arithmetic
 import           Prelude                 hiding ( Left
                                                 , Right
@@ -128,6 +132,23 @@ placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
     | newY > 0  -> -1
     | newY < 0  -> 1
     | otherwise -> 0
+
+rotate :: Float -> Image -> Image
+rotate deg Image {..} = Image newW newH
+  $ map (\(p, c) -> (G.rotate (negate deg) p, rotateC c)) shapes
+ where
+  newW =
+    width
+      * (sine . Degrees $ 90 - modDeg)
+      + height
+      * (sine . Degrees $ 90 - modDeg)
+  newH = width * (sine . Degrees $ modDeg) + height * (sine . Degrees $ modDeg)
+  modDeg = mod' deg 90
+  rotateC :: (Float, Float) -> (Float, Float)
+  rotateC (x, y) =
+    ( x * (cosine . Degrees $ deg) + y * (negate . sine . Degrees $ deg)
+    , x * (sine . Degrees $ deg) + y * (cosine . Degrees $ deg)
+    )
 
 overlay :: Image -> Image -> Image
 overlay i1 i2 = placeImage i1 (width i2 / 2) (height i2 / 2) i2
