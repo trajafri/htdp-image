@@ -85,7 +85,7 @@ placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
   newH = max (height i2) $ max (height i1) $ if incHCase
     then (height i1 / 2) + (abs newY) + (height i2 / 2)
     else 0
-  -- whether i1's width/height lays outside of i2's /width/height
+  -- whether i1's width/height lay outside of i2's width/height
   incWCase = (abs newX) + (width i1 / 2) > (width i2 / 2)
   incHCase = (abs newY) + (height i1 / 2) > (height i2 / 2)
   -- x/y position converted from screen coord to cartesian coord
@@ -107,10 +107,7 @@ placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
     | newW == width i1 && newH == height i1
     = shapes i1
     | newW == width i2 && newH == height i2
-    = shapes i2
-      ++ [ (p, (ox + newX + xOffset, oy + newY + yOffset))
-         | (p, (ox, oy)) <- shapes i1
-         ]
+    = shapes i2 ++ [ (p, (ox + newX, oy + newY)) | (p, (ox, oy)) <- shapes i1 ]
     | otherwise
     = [ (p, (x2 + x2Shift, y2 + y2Shift)) | (p, (x2, y2)) <- shapes i2 ]
       ++ [ (p, (x1 + x1Shift, y1 + y1Shift)) | (p, (x1, y1)) <- shapes i1 ]
