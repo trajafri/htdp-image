@@ -34,9 +34,10 @@ high = High
 
 imageOffset :: (Image -> Float) -> Alignment -> Image -> Image -> Float
 imageOffset dim al i1 i2 = case al of
-  Low  -> negate $ (dim i1 - dim i2) / 2
+  Low  -> lowAlign
   Mid  -> 0
-  High -> (dim i1 - dim i2) / 2
+  High -> negate lowAlign
+  where lowAlign = (dim i2 - dim i1) / 2
 
 above :: Image -> Image -> Image
 above = aboveAlign mid
@@ -118,15 +119,13 @@ placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
   y1Shift = (negate yDir) * ((newH - height i1) / 2)
   -- direction based on i1's location relative to i2
   xDir    = if
-    | not incWCase -> 0
-    | newX > 0     -> -1
-    | newX < 0     -> 1
-    | otherwise    -> 0
+    | newX > 0  -> -1
+    | newX < 0  -> 1
+    | otherwise -> 0
   yDir = if
-    | not incHCase -> 0
-    | newY > 0     -> -1
-    | newY < 0     -> 1
-    | otherwise    -> 0
+    | newY > 0  -> -1
+    | newY < 0  -> 1
+    | otherwise -> 0
 
 overlay :: Image -> Image -> Image
 overlay i1 i2 = placeImage i1 (width i2 / 2) (height i2 / 2) i2
