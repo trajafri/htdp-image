@@ -1,3 +1,5 @@
+{-# LANGUAGE MultiWayIf #-}
+
 module Graphics.Combinator
   ( above
   , aboves
@@ -111,16 +113,22 @@ placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
          | (p, (ox, oy)) <- shapes i1
          ]
     | otherwise
-    = [ (p, (x2 + (xDir * xShift), y2 + (yDir * yShift)))
-      | (p, (x2, y2)) <- shapes i2
-      ]
-      ++ [ (p, (x1 + (negate xDir * xShift), y1 + (negate yDir * yShift)))
-         | (p, (x1, y1)) <- shapes i1
-         ]
-  xShift = if incWCase then xDir * newX / 2 else 0
-  yShift = if incHCase then yDir * newY / 2 else 0
-  xDir   = if incWCase && newX > 0 then -1 else 1
-  yDir   = if incHCase && newY > 0 then -1 else 1
+    = [ (p, (x2 + x2Shift, y2 + y2Shift)) | (p, (x2, y2)) <- shapes i2 ]
+      ++ [ (p, (x1 + x1Shift, y1 + y1Shift)) | (p, (x1, y1)) <- shapes i1 ]
+  x2Shift = xDir * ((newW - width i2) / 2)
+  y2Shift = yDir * ((newH - height i2) / 2)
+  x1Shift = (negate xDir) * ((newW - width i1) / 2)
+  y1Shift = (negate yDir) * ((newH - height i1) / 2)
+  xDir    = if
+    | not incWCase -> 0
+    | newX > 0     -> -1
+    | newX < 0     -> 1
+    | otherwise    -> 0
+  yDir = if
+    | not incHCase -> 0
+    | newY > 0     -> -1
+    | newY < 0     -> 1
+    | otherwise    -> 0
 
 
 
