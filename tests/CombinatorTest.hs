@@ -166,17 +166,17 @@ placeImagePosTest = TestList
   [ TestCase $ assertEqual (posError ++ i) (l1 ++ l2) (shapes pic)
   | (i, l1, l2, pic) <-
 -- image on center
-    [ ("0", shapes image1, []           , placeImage image1 25 25 image1)
-    , ("1", shapes image1, []           , placeImage image1 5 25 image2)
-    , ("2", shapes image1, []           , placeImage image1 25 5 image3)
+    [ ("0", shapes image1, shapes image1, placeImage image1 25 25 image1)
+    , ("1", shapes image2, shapes image1, placeImage image1 5 25 image2)
+    , ("2", shapes image3, shapes image1, placeImage image1 25 5 image3)
     , ("3", shapes image1, shapes image2, placeImage image2 25 25 image1)
-    , ("4", shapes image2, []           , placeImage image2 5 25 image2)
+    , ("4", shapes image2, shapes image2, placeImage image2 5 25 image2)
     , ("5", shapes image3, shapes image2, placeImage image2 25 5 image3)
     , ("6", shapes image1, shapes image3, placeImage image3 25 25 image1)
     , ("7", shapes image2, shapes image3, placeImage image3 5 25 image2)
     , ( "8"
       , shapes image3
-      , []
+      , shapes image3
       , placeImage image3 25 5 image3
       )
 -- image on left mid
@@ -185,7 +185,11 @@ placeImagePosTest = TestList
       , [ (p, (x - 12.5, y)) | (p, (x, y)) <- shapes image1 ]
       , placeImage image1 0 25 image1
       )
-    , ("10", [], shapes image1, placeImage image1 0 25 image2)
+    , ( "10"
+      , [ (p, (x + 5, y)) | (p, (x, y)) <- shapes image2 ]
+      , shapes image1
+      , placeImage image1 0 25 image2
+      )
     , ( "11"
       , [ (p, (x + 12.5, y)) | (p, (x, y)) <- shapes image3 ]
       , [ (p, (x - 12.5, y)) | (p, (x, y)) <- shapes image1 ]

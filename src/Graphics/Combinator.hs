@@ -23,7 +23,6 @@ module Graphics.Combinator
 where
 
 import           Data.Angle
-import           Data.Fixed
 import           Graphics.Data.Image
 import qualified Graphics.Gloss                as G
 import           Graphics.Util.Arithmetic
@@ -107,12 +106,12 @@ placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
     Low  -> dim i1 / 2
     Mid  -> 0
     High -> negate $ dim i1 / 2
-  -- if i1 completely covers i2, remove i2.
+  -- if i1 covers i2, don't move i1 at all, but shift i2
   -- if i1 is within i2, don't move i2 at all, but shift i1
   -- else, move both
   newShapes
     | newW == width i1 && newH == height i1
-    = shapes i1
+    = [ (p, (ox - newX, oy - newY)) | (p, (ox, oy)) <- shapes i2 ] ++ shapes i1
     | newW == width i2 && newH == height i2
     = shapes i2 ++ [ (p, (ox + newX, oy + newY)) | (p, (ox, oy)) <- shapes i1 ]
     | otherwise
@@ -139,11 +138,14 @@ rotate deg Image {..} = Image newW newH
  where
   newW =
     width
-      * (sine . Degrees $ 90 - modDeg)
+      * (abs . sine . Degrees $ 90 - deg)
       + height
-      * (sine . Degrees $ 90 - modDeg)
-  newH = width * (sine . Degrees $ modDeg) + height * (sine . Degrees $ modDeg)
-  modDeg = mod' deg 90
+      * (abs . sine . Degrees $ deg)
+  newH =
+    width
+      * (abs . sine . Degrees $ deg)
+      + height
+      * (abs . sine . Degrees $ 90 - deg)
   rotateC :: (Float, Float) -> (Float, Float)
   rotateC (x, y) =
     ( x * (cosine . Degrees $ deg) + y * (negate . sine . Degrees $ deg)
