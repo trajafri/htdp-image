@@ -11,11 +11,13 @@ module Graphics.Combinator
   , high
   , low
   , mid
+  , overlay
+  , overlayOffset
   , placeImage
   , placeImages
   , placeImageAlign
-  , overlay
   , underlay
+  , underlayOffset
   )
 where
 
@@ -132,27 +134,27 @@ overlay i1 i2 = placeImage i1 (width i2 / 2) (height i2 / 2) i2
 
 --overlayAlign :: Alignment -> Alignment -> Image -> Image -> Image
 --overlayAlign xAl yAl i1 = overlayAlignOffset xAl yAl i1 0 0
---
---overlayOffset :: Image -> Float -> Float -> Image -> Image
---overlayOffset = overlayAlignOffset mid mid
---
+
+overlayOffset :: Image -> Float -> Float -> Image -> Image
+overlayOffset = overlayAlignOffset mid mid
+
 --overlayXY :: Image -> Float -> Float -> Image -> Image
---overlayXY = overlayOffset
---
---overlayAlignOffset
---  :: Alignment -> Alignment -> Image -> Float -> Float -> Image -> Image
---overlayAlignOffset xAl yAl i1 x y i2 =
---  placeImageAlign i1 (x + (width i2 / 2)) (y + (height i2 / 2)) xAl yAl i2
+--overlayXY i1 x y i2 = placeImage i1 (negate x) (negate y) i2
+
+overlayAlignOffset
+  :: Alignment -> Alignment -> Image -> Float -> Float -> Image -> Image
+overlayAlignOffset xAl yAl i1 x y i2 =
+  placeImageAlign i1 (width i2 / 2 - x) (height i2 / 2 - y) xAl yAl i2
 
 underlay :: Image -> Image -> Image
 underlay = flip overlay
 
 --underlayAlign :: Alignment -> Alignment -> Image -> Image -> Image
 --underlayAlign xAl yAl i1 i2 = overlayAlign xAl yAl i2 i1
---
---underlayOffset :: Image -> Float -> Float -> Image -> Image
---underlayOffset i1 x y i2 = overlayOffset i2 x y i1
---
+
+underlayOffset :: Image -> Float -> Float -> Image -> Image
+underlayOffset i1 x y i2 = overlayOffset i2 (negate x) (negate y) i1
+
 --underlayAlignOffset
 --  :: Alignment -> Alignment -> Image -> Float -> Float -> Image -> Image
 --underlayAlignOffset xAl yAl i1 x y i2 = overlayAlignOffset xAl yAl i2 x y i1
