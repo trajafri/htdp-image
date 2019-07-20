@@ -34,7 +34,7 @@ high = High
 
 imageOffset :: (Image -> Float) -> Alignment -> Image -> Image -> Float
 imageOffset dim al i1 i2 = case al of
-  Low  -> negate $ dim i1 - dim i2 / 2
+  Low  -> negate $ (dim i1 - dim i2) / 2
   Mid  -> 0
   High -> (dim i1 - dim i2) / 2
 
@@ -45,14 +45,10 @@ aboves :: [Image] -> Image
 aboves = foldr1 above
 
 aboveAlign :: Alignment -> Image -> Image -> Image
-aboveAlign a i1 i2 = Image
-  { width  = max (width i1) (width i2)
-  , height = height i1 + height i2
-  , shapes = [ (p, (x, y + (height i2 / 2))) | (p, (x, y)) <- shapes i1 ]
-               ++ [ (p, (x + offset, y - (height i1 / 2)))
-                  | (p, (x, y)) <- shapes i2
-                  ]
-  }
+aboveAlign a i1 i2 = placeImage i2
+                                (offset + width i1 / 2)
+                                (height i1 + height i2 / 2)
+                                i1
   where offset = imageOffset width a i1 i2
 
 beside :: Image -> Image -> Image
@@ -62,14 +58,10 @@ besides :: [Image] -> Image
 besides = foldr1 beside
 
 besideAlign :: Alignment -> Image -> Image -> Image
-besideAlign a i1 i2 = Image
-  { width  = width i1 + width i2
-  , height = max (height i1) (height i2)
-  , shapes = [ (p, (x - (width i2 / 2), y)) | (p, (x, y)) <- shapes i1 ]
-               ++ [ (p, (x + (width i1 / 2), y + offset))
-                  | (p, (x, y)) <- shapes i2
-                  ]
-  }
+besideAlign a i1 i2 = placeImage i2
+                                 (width i1 + width i2 / 2)
+                                 (negate offset + height i1 / 2)
+                                 i1
   where offset = imageOffset height a i1 i2
 
 placeImage :: Image -> Float -> Float -> Image -> Image
@@ -86,24 +78,31 @@ placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
                                           , shapes = newShapes
                                           }
  where
+  -- width and height of new image
   newW = max (width i2) $ max (width i1) $ if incWCase
     then (width i1 / 2) + (abs newX) + (width i2 / 2)
     else 0
   newH = max (height i2) $ max (height i1) $ if incHCase
     then (height i1 / 2) + (abs newY) + (height i2 / 2)
     else 0
+  -- whether i1's width/height lays outside of i2's /width/height
   incWCase = (abs newX) + (width i1 / 2) > (width i2 / 2)
   incHCase = (abs newY) + (height i1 / 2) > (height i2 / 2)
+  -- x/y position converted from screen coord to cartesian coord
   newX =
     convert 0 (negate $ width i2 / 2) (width i2) (width i2 / 2) x + xOffset
   newY =
     convert 0 (height i2 / 2) (height i2) (negate $ height i2 / 2) y + yOffset
+  --x/y offset based on the given alignment
   xOffset = shiftImage width xAl
   yOffset = shiftImage height yAl
   shiftImage dim a = case a of
     Low  -> dim i1 / 2
     Mid  -> 0
     High -> negate $ dim i1 / 2
+  -- if i1 completely covers i2, remove i2.
+  -- if i1 is within i2, don't move i2 at all, but shift i1
+  -- else, move both
   newShapes
     | newW == width i1 && newH == height i1
     = shapes i1
@@ -115,10 +114,12 @@ placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
     | otherwise
     = [ (p, (x2 + x2Shift, y2 + y2Shift)) | (p, (x2, y2)) <- shapes i2 ]
       ++ [ (p, (x1 + x1Shift, y1 + y1Shift)) | (p, (x1, y1)) <- shapes i1 ]
+  -- shift magnitudes
   x2Shift = xDir * ((newW - width i2) / 2)
   y2Shift = yDir * ((newH - height i2) / 2)
   x1Shift = (negate xDir) * ((newW - width i1) / 2)
   y1Shift = (negate yDir) * ((newH - height i1) / 2)
+  -- direction based on i1's location relative to i2
   xDir    = if
     | not incWCase -> 0
     | newX > 0     -> -1
@@ -129,8 +130,6 @@ placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
     | newY > 0     -> -1
     | newY < 0     -> 1
     | otherwise    -> 0
-
-
 
 overlay :: Image -> Image -> Image
 overlay i1 i2 = placeImage i1 (width i2 / 2) (height i2 / 2) i2
