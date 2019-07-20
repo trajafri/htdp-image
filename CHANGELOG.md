@@ -1,5 +1,14 @@
 # Revision history for htdp-image
 
+## 0.4.0.0 -- 2019-07-20
+
+* placeImage now increases the binding box to fit both images
+  (as compared to just assuming that the second image is the base)
+* Redefined {above, beside}, {above, beside}Align using placeImageAlign
+* Added {overlay, underlay}Align.
+* Added a simple implementation of rotate.
+
+
 ## 0.3.1.0 -- 2019-07-17
 
 * Add aboveAlign, besideAlign, placeImageAlign, besides, aboves, and placeImages
