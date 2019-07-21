@@ -8,6 +8,7 @@ module Graphics.Shape
   , outline
   , rectangle
   , rhombus
+  , rightTriangle
   , solid
   , square
   , star
@@ -93,6 +94,18 @@ rhombus sideLength angle m c = Image { width  = base
   rShape = case m of
     Solid   -> G.polygon rhombusShape
     Outline -> G.line ((0, negate opp / 2) : rhombusShape)
+
+rightTriangle :: Float -> Float -> Mode -> Color -> Image
+rightTriangle b p m c = Image { width  = b
+                              , height = p
+                              , shapes = [(G.color c triangleShape, origin)]
+                              }
+ where
+  tShape =
+    [(b / 2, negate p / 2), (negate b / 2, p / 2), (negate b / 2, negate p / 2)]
+  triangleShape = case m of
+    Solid   -> G.polygon tShape
+    Outline -> G.line ((negate b / 2, negate p / 2) : tShape)
 
 square :: Float -> Mode -> Color -> Image
 square w = rectangle w w
