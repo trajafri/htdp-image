@@ -3,6 +3,7 @@ module Graphics.Util.Arithmetic
   , computeRightSide
   , convert
   , distance
+  , heron
   )
 where
 
@@ -41,8 +42,13 @@ convert a1 a2 b1 b2 c1 = (((c1 - a1) * (b2 - a2)) / (b1 - a1)) + a2
           c2 = (c1 - a1)(b2 - a2) + a2
                ------------------
                     (b1 - a1)
+
+Thanks RRose
 -}
 
 distance :: (Float, Float) -> (Float, Float) -> Float
 distance (x1, y1) (x2, y2) = ((y2 - y1) ** 2 + (x2 - x1) ** 2) ** (1 / 2)
 
+heron :: Float -> Float -> Float -> Float
+heron a b c = (p * (p - a) * (p - b) * (p - c)) ** (1 / 2)
+  where p = (a + b + c) / 2

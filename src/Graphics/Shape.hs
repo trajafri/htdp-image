@@ -4,6 +4,7 @@ module Graphics.Shape
   , circle
   , ellipse
   , emptyImage
+  , isoscelesTriangle
   , line
   , outline
   , rectangle
@@ -17,6 +18,7 @@ module Graphics.Shape
 where
 
 import           Data.Angle
+import           Data.Fixed
 import           Data.List
 import           Graphics.Combinator
 import           Graphics.Data.Image
@@ -59,6 +61,26 @@ ellipse w h m c = Image { width  = w
 
 emptyImage :: Image
 emptyImage = Image 0 0 []
+
+isoscelesTriangle :: Float -> Float -> Mode -> Color -> Image
+isoscelesTriangle sl deg m c = Image
+  { width  = newW
+  , height = newH
+  , shapes = [(G.color c triangleShape, origin)]
+  }
+ where
+  newW   = (2 * (sl ** 2) * (1 - (cosine . Degrees $ deg))) ** (1 / 2)
+  newH   = computeRightSide sl (newW / 2)
+  topDir = if mod' deg 360 < 180 then 1 else -1
+  tShape =
+    [ (negate newW / 2, negate topDir * (newH / 2))
+    , (0              , topDir * newH / 2)
+    , (newW / 2       , negate topDir * (newH / 2))
+    ]
+  triangleShape = case m of
+    Solid   -> G.polygon tShape
+    Outline -> G.line ((newW / 2, negate topDir * (newH / 2)) : tShape)
+
 
 line :: Float -> Float -> Color -> Image
 line x y c = Image { width  = abs x
@@ -145,16 +167,48 @@ star side m c = Image { width  = w
   midPerp    = computeRightSide side $ (1.618 * side) / 2
 
 triangle :: Float -> Mode -> Color -> Image
-triangle sideLength mode c = Image
-  { width  = tW
-  , height = tH
-  , shapes = [(G.color c triangleShape, origin)]
-  }
+triangle sideLength = isoscelesTriangle sideLength 60
+
+triangleAAS :: Float -> Float -> Float -> Mode -> Color -> Image
+triangleAAS degr degl b = triangleSSS
+  (b * (sine . Degrees $ degr) / (sine . Degrees $ 180 - degl + degr))
+  (b * (sine . Degrees $ degl) / (sine . Degrees $ 180 - degl + degr))
+  b
+
+triangleASA :: Float -> Float -> Float -> Mode -> Color -> Image
+triangleASA degr l degb = triangleSSS
+  (l * (sine . Degrees $ degr) / (sine . Degrees $ 180 - degb + degr))
+  l
+  (l * (sine . Degrees $ degb) / (sine . Degrees $ 180 - degb + degr))
+
+triangleSAA :: Float -> Float -> Float -> Mode -> Color -> Image
+triangleSAA r degl degb = triangleSSS
+  r
+  (r * (sine . Degrees $ degl) / (sine . Degrees $ 180 - degb + degl))
+  (r * (sine . Degrees $ degb) / (sine . Degrees $ 180 - degb + degl))
+
+triangleASS :: Float -> Float -> Float -> Mode -> Color -> Image
+triangleASS deg l b =
+  triangleSSS ((l ** 2) + (b ** 2) - 2 * b * l * (cosine . Degrees $ deg)) l b
+
+triangleSAS :: Float -> Float -> Float -> Mode -> Color -> Image
+triangleSAS r deg b =
+  triangleSSS r ((r ** 2) + (b ** 2) - 2 * b * r * (cosine . Degrees $ deg)) b
+
+triangleSSA :: Float -> Float -> Float -> Mode -> Color -> Image
+triangleSSA r l deg =
+  triangleSSS r l ((r ** 2) + (l ** 2) - 2 * l * r * (cosine . Degrees $ deg))
+
+triangleSSS :: Float -> Float -> Float -> Mode -> Color -> Image
+triangleSSS r l b m c = Image { width  = b
+                              , height = newH
+                              , shapes = [(G.color c triangleShape, origin)]
+                              }
  where
-  tW = sideLength
-  tH = computeRightSide tW (sideLength / 2)
-  tShape = --left, right, top
-    [(negate $ tW / 2, negate $ tH / 2), (tW / 2, negate $ tH / 2), (0, tH / 2)]
-  triangleShape = case mode of
+  newH = (heron r l b) * 2 / b
+  midP = computeRightSide l newH
+  tShape =
+    [(negate b / 2, newH / 2), (undefined, negate newH / 2), (b / 2, newH / 2)]
+  triangleShape = case m of
     Solid   -> G.polygon tShape
-    Outline -> G.line ((0, tH / 2) : tShape)
+    Outline -> G.line ((b / 2, newH / 2) : tShape)
