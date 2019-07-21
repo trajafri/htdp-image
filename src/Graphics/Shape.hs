@@ -1,3 +1,5 @@
+{-# LANGUAGE MultiWayIf #-}
+
 module Graphics.Shape
   ( Mode
   , addLine
@@ -14,6 +16,13 @@ module Graphics.Shape
   , square
   , star
   , triangle
+  , triangleAAS
+  , triangleASA
+  , triangleASS
+  , triangleSAA
+  , triangleSAS
+  , triangleSSA
+  , triangleSSS
   )
 where
 
@@ -170,45 +179,79 @@ triangle :: Float -> Mode -> Color -> Image
 triangle sideLength = isoscelesTriangle sideLength 60
 
 triangleAAS :: Float -> Float -> Float -> Mode -> Color -> Image
-triangleAAS degr degl b = triangleSSS
-  (b * (sine . Degrees $ degr) / (sine . Degrees $ 180 - degl + degr))
-  (b * (sine . Degrees $ degl) / (sine . Degrees $ 180 - degl + degr))
-  b
+triangleAAS degr degl t = triangleSSS
+  (t * (sine . Degrees $ degr) / (sine . Degrees $ 180 - (degl + degr)))
+  (t * (sine . Degrees $ degl) / (sine . Degrees $ 180 - (degl + degr)))
+  t
 
 triangleASA :: Float -> Float -> Float -> Mode -> Color -> Image
-triangleASA degr l degb = triangleSSS
-  (l * (sine . Degrees $ degr) / (sine . Degrees $ 180 - degb + degr))
+triangleASA degl l degt = triangleSSS
+  (l * (sine . Degrees $ degl) / (sine . Degrees $ 180 - (degt + degl)))
   l
-  (l * (sine . Degrees $ degb) / (sine . Degrees $ 180 - degb + degr))
+  (l * (sine . Degrees $ degt) / (sine . Degrees $ 180 - (degt + degl)))
 
 triangleSAA :: Float -> Float -> Float -> Mode -> Color -> Image
-triangleSAA r degl degb = triangleSSS
+triangleSAA r degr degt = triangleSSS
   r
-  (r * (sine . Degrees $ degl) / (sine . Degrees $ 180 - degb + degl))
-  (r * (sine . Degrees $ degb) / (sine . Degrees $ 180 - degb + degl))
+  (r * (sine . Degrees $ degr) / (sine . Degrees $ 180 - (degt + degr)))
+  (r * (sine . Degrees $ degt) / (sine . Degrees $ 180 - (degt + degr)))
 
 triangleASS :: Float -> Float -> Float -> Mode -> Color -> Image
-triangleASS deg l b =
-  triangleSSS ((l ** 2) + (b ** 2) - 2 * b * l * (cosine . Degrees $ deg)) l b
+triangleASS deg l t = triangleSSS
+  (((l ** 2) + (t ** 2) - 2 * t * l * (cosine . Degrees $ deg)) ** (1 / 2))
+  l
+  t
 
 triangleSAS :: Float -> Float -> Float -> Mode -> Color -> Image
-triangleSAS r deg b =
-  triangleSSS r ((r ** 2) + (b ** 2) - 2 * b * r * (cosine . Degrees $ deg)) b
+triangleSAS r deg t = triangleSSS
+  r
+  (((r ** 2) + (t ** 2) - 2 * t * r * (cosine . Degrees $ deg)) ** (1 / 2))
+  t
 
 triangleSSA :: Float -> Float -> Float -> Mode -> Color -> Image
-triangleSSA r l deg =
-  triangleSSS r l ((r ** 2) + (l ** 2) - 2 * l * r * (cosine . Degrees $ deg))
+triangleSSA r l deg = triangleSSS
+  r
+  l
+  (((r ** 2) + (l ** 2) - 2 * l * r * (cosine . Degrees $ deg)) ** (1 / 2))
 
+-- If it's not possible to construct the requested triangel, an empty image is returned
 triangleSSS :: Float -> Float -> Float -> Mode -> Color -> Image
-triangleSSS r l b m c = Image { width  = b
-                              , height = newH
-                              , shapes = [(G.color c triangleShape, origin)]
-                              }
+triangleSSS r l t m c =
+  if (round . distance (bottX, negate newH / 2) $ (-t / 2, newH / 2) :: Integer)
+     == (round l)
+     && (round . distance (bottX, negate newH / 2) $ (t / 2, newH / 2) :: Integer
+        )
+     == round r
+  then
+    Image { width  = newW
+          , height = newH
+          , shapes = [(G.color c triangleShape, origin)]
+          }
+  else
+    emptyImage
+
  where
-  newH = (heron r l b) * 2 / b
-  midP = computeRightSide l newH
+  angleL =
+    arccosine $ (l ** 2 - r ** 2 - t ** 2) / (-2 * r * t) :: Degrees Float
+  angleR =
+    arccosine $ (r ** 2 - l ** 2 - t ** 2) / (-2 * l * t) :: Degrees Float
+  newH = (if angleR < angleL then l else r) * (sine $ min angleR angleL)
+  newW = if
+    | angleR < angleL && angleL > Degrees 90
+    -> l * (sine $ Degrees 90 - min angleR angleL)
+    | angleL < angleR && angleR > Degrees 90
+    -> r * (sine $ Degrees 90 - min angleR angleL)
+    | otherwise
+    -> t
+  bottW = computeRightSide (max l r) newH
+  bottX = if l > r then bottW - (t / 2) else negate $ bottW - (t / 2)
+  converter =
+    convert (min bottX $ -t / 2) (-newW / 2) (max bottX $ t / 2) (newW / 2)
   tShape =
-    [(negate b / 2, newH / 2), (undefined, negate newH / 2), (b / 2, newH / 2)]
+    [ (converter $ negate t / 2, newH / 2)
+    , (converter bottX         , negate newH / 2)
+    , (converter $ t / 2       , newH / 2)
+    ]
   triangleShape = case m of
     Solid   -> G.polygon tShape
-    Outline -> G.line ((b / 2, newH / 2) : tShape)
+    Outline -> G.line ((converter $ t / 2, newH / 2) : tShape)
