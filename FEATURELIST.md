@@ -15,8 +15,6 @@ Only the following 2htdp/image functions have not been ported:
 
 ## Polygons 
 
-All triangle functions will be added. Just need to get [triangle/sss](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._triangle%2Fsss%29%29) done.
-
 * [star (solid)](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._star%29%29)
 	Current implementation of a solid star is affected by OpenGL's non-convex polygon issue. It can be solved by making star
   out of convex polygons but needs more work.
