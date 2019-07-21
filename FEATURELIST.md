@@ -15,7 +15,7 @@ Only the following 2htdp/image functions have not been ported:
 
 ## Polygons 
 
-All triangle functions will be added. Just gotta get [triangel/sss](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._triangle%2Fsss%29%29) done.
+All triangle functions will be added. Just need to get [triangle/sss](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._triangle%2Fsss%29%29) done.
 
 * [star (solid)](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._star%29%29)
 	Current implementation of a solid star is affected by OpenGL's non-convex polygon issue. It can be solved by making star
@@ -55,18 +55,26 @@ All triangle functions will be added. Just gotta get [triangel/sss](https://docs
 * [color-frame](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.color-frame%29%29)
 	These are trivial.
 
-## [Bitmaps](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28part._.Bitmaps%29) (none are implemented since I was more focused on being able to combine images similar to 2htdp/image)
+## Bitmaps
+
+None are implemented since I was more focused on being able to combine images similar to 2htdp/image
 
 ## Image Properties
 
 * [image-baseline](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.image-baseline%29%29)
 	This is used for text which don't exist in this library. No need for this yet.
 
-## [Image Predicates](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28part._.Image_.Predicates%29) (don't need em!)
+## Image Predicates
 
-## [Pinholes ](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28part._.Pinholes%29) (Haven't looked into these yet)
+Don't need em!
 
-## [Exporting Images to Disk](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28part._.Exporting_.Images_to_.Disk%29) (Maybe. I think Gloss allows something like this)
+## Pinholes
+
+Haven't looked into these yet
+
+## Exporting Images to Disk
+
+Maybe. I think Gloss allows something like this
 
 
 # Differences
@@ -91,5 +99,6 @@ All triangle functions will be added. Just gotta get [triangel/sss](https://docs
   the new binding box is currently calculated by using the old binding box.
   For example, if we have an equilateral triangle, the binding box is originally (width X height) of the triangle.
   Then let's say we rotate the triangle by 30 degrees. In this case, the new binding box will be big enough to fit
-  the (width X height) binding box, not the triangle.
+  the (width X height) binding box, not the triangle. Therefore, the rotated image ends up taking up more room
+  than it should.
 * Instead of having "x-place" and "y-place", there is one Alignment type with 3 members (Low, Mid, and High).
