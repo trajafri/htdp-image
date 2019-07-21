@@ -1,5 +1,6 @@
 module Graphics.Shape
   ( Mode
+  , addLine
   , circle
   , ellipse
   , emptyImage
@@ -16,6 +17,7 @@ where
 
 import           Data.Angle
 import           Data.List
+import           Graphics.Combinator
 import           Graphics.Data.Image
 import qualified Graphics.Gloss                as G
 import           Graphics.Gloss.Data.Color
@@ -27,9 +29,12 @@ solid, outline :: Mode
 solid = Solid
 outline = Outline
 
-
 origin :: G.Point
 origin = (0, 0)
+
+addLine :: Image -> Float -> Float -> Float -> Float -> Color -> Image
+addLine i x1 y1 x2 y2 c =
+  placeImage (line (x1 - x2) (y1 - y2) c) ((x1 + x2) / 2) ((y1 + y2) / 2) i
 
 circle :: Float -> Mode -> Color -> Image
 circle r mode c = Image { width  = r * 2
