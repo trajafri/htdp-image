@@ -6,7 +6,7 @@ where
 
 import           Graphics.Gloss
 
-data Image = Image {width :: Float , height :: Float , shapes :: [(Picture, Point)] }
+data Image = Image {width :: Float , height :: Float , shapes :: [(Picture, Point)] } deriving Eq
 
 emptyScene :: Float -> Float -> Image
 emptyScene w h = Image { width = w, height = h, shapes = [] }

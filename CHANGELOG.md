@@ -1,5 +1,10 @@
 # Revision history for htdp-image
 
+## 0.4.1.0 -- 2019-07-20
+
+* Added {overlay, underlay}AlignOffset/Align/XY
+
+
 ## 0.4.0.0 -- 2019-07-20
 
 * placeImage now increases the binding box to fit both images
