@@ -19,6 +19,7 @@ module Graphics.Combinator
   , placeImage
   , placeImages
   , placeImageAlign
+  , placeImagesAlign
   , rotate
   , underlay
   , underlayAlign
@@ -137,6 +138,11 @@ placeImageAlign i1 x y xAl yAl i2 = Image { width  = newW
     | newY > 0  -> -1
     | newY < 0  -> 1
     | otherwise -> 0
+
+placeImagesAlign
+  :: [Image] -> [(Float, Float)] -> Alignment -> Alignment -> Image -> Image
+placeImagesAlign is ps xAl yAl b =
+  foldr (\(i1, (x, y)) i2 -> placeImageAlign i1 x y xAl yAl i2) b $ zip is ps
 
 rotate :: Float -> Image -> Image
 rotate deg Image {..} = Image newW newH

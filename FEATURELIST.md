@@ -1,37 +1,73 @@
 # Feature List
 
-Only the following 2htdp/image functions have been ported so far:
+Only the following 2htdp/image functions have not been ported:
 
-* [above](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._above%29%29)
-* [above/align](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._above%2Falign%29%29)
-* [beside](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._beside%29%29)
-* [beside/align](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._beside%2Falign%29%29)
-* [circle](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._circle%29%29)
-* [ellipse](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._ellipse%29%29)
-* [empty-image](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._empty-image%29%29)
-* [empty-scene](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._empty-scene%29%29)
-* [image-width](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._image-width%29%29)
-* [image-height](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._image-height%29%29)
-* [line](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._line%29%29)
-* [overlay](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._overlay%29%29)
-* [overlay/align](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._overlay%2Falign%29%29)
-* [overlay/offset](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._overlay%2Foffset%29%29)
-* [overlay/align/offset](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._overlay%2Falign%2Foffset%29%29)
-* [overlay/xy](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._overlay%2Fxy%29%29)
-* [place-image](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._place-image%29%29)
-* [place-images](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._place-images%29%29)
-* [place-image/align](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._place-image%2Falign%29%29)
-* [rectangle](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._rectangle%29%29)
-* [rhombus](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._rhombus%29%29)
-* [rotate](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._rotate%29%29)
-* [square](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._square%29%29)
-* [star](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._star%29%29)
-* [triangle](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._triangle%29%29)
-* [underlay](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._underlay%29%29)
-* [underlay/align](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._underlay%2Falign%29%29)
-* [underlay/align/offset](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._underlay%2Falign%2Foffset%29%29)
-* [underlay/offset](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._underlay%2Foffset%29%29)
-* [underlay/xy](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._underlay%2Fxy%29%29)
+## Basic Images
+
+* [add-curve](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._add-curve%29%29)
+	This needs more work so leaving this for when I feel like giving this a shot.
+* [add-solid-curve](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._add-solid-curve%29%29)
+	Same reason as above.
+* [text](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._text%29%29)
+	Can't really use Gloss' text. Not sure how to determine dimensions. Seems difficult right now.
+* [text/font](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._text%2Ffont%29%29)
+	Same as above + not sure about fonts.
+
+## Polygons 
+
+All triangle functions will be added. Just gotta get [triangel/sss](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._triangle%2Fsss%29%29) done.
+
+* [star (solid)](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._star%29%29)
+	Current implementation of a solid star is affected by OpenGL's non-convex polygon issue. It can be solved by making star
+  out of convex polygons but needs more work.
+* [star-polygon](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._star-polygon%29%29)
+* [radial-star](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._radial-star%29%29)
+* [regular-polygon](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._regular-polygon%29%29)
+* [pulled-regular-polygon](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._pulled-regular-polygon%29%29)
+* [polygon](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._polygon%29%29)
+	Need to feel motivated to implement these. Just lazy right now. However, pulled polygon seems like more work, but if I get curves working,
+  this should also be doable.
+* [add-polygon](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29._add-polygon%29%29)
+	placeImage currently behaves similar to this function. Just need to implement polygon to implement this function.
+* [scene+polygon](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.scene%2Bpolygon%29%29)
+	Since cropping is not supported, this will not be implemented.
+
+## Placing Images & Scenes
+
+* [scene+line](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.scene%2Bline%29%29)
+* [scene+curve](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.scene%2Bcurve%29%29)
+	Needs cropping.
+
+## Rotating, Scaling, Flipping, Cropping, and Framing Images
+
+* [rotate](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.rotate%29%29)
+	Currently, rotating is glitchy in some cases. Fixing this might need some work.
+* [scale](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.scale%29%29)
+* [scale/xy](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.scale%2Fxy%29%29)
+	Scaling with the current implementation doesn't seem doable.
+* [flip-horizontal](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.flip-horizontal%29%29)
+* [flip-veritcal](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.flip-veritcal%29%29)
+	Since rotate is glitchy, I haven't done this yet + veritcal flip needs some thinking. If it needs scaling, then can't be done right now.
+* [crop](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.crop%29%29)
+* [crop/align](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.crop%2Falign%29%29)
+	Cropping will need more control over the images. Since this package depends on Gloss to handle images, this seems difficult.
+* [frame](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.frame%29%29)
+* [color-frame](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.color-frame%29%29)
+	These are trivial.
+
+## [Bitmaps](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28part._.Bitmaps%29) (none are implemented since I was more focused on being able to combine images similar to 2htdp/image)
+
+## Image Properties
+
+* [image-baseline](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28def._%28%28lib._2htdp%2Fimage..rkt%29.image-baseline%29%29)
+	This is used for text which don't exist in this library. No need for this yet.
+
+## [Image Predicates](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28part._.Image_.Predicates%29) (don't need em!)
+
+## [Pinholes ](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28part._.Pinholes%29) (Haven't looked into these yet)
+
+## [Exporting Images to Disk](https://docs.racket-lang.org/teachpack/2htdpimage.html#%28part._.Exporting_.Images_to_.Disk%29) (Maybe. I think Gloss allows something like this)
+
 
 # Differences
 
@@ -39,12 +75,15 @@ Only the following 2htdp/image functions have been ported so far:
   (and even draws them there!).
   htdp-image doesn't have that feature so every image is drawn in a new window.
 * empty-scene is basically the same as a rectangle (or, there is no concept of scene as it is in 2htdp/image).
+  In later versions, this will be removed.
 * Non-convex polygons are glitchy, thanks to OpenGL. Something will be done to fix non-convex polygons
   provided by htdp-image, but if a user creates a non-convex polygon, then they might run into OpenGL issues.
 * placeImage does not crop part of images that lay outside the dimensions of the image they are being placed on top of.
+  In other words, placeImage is similar to add-polygon function.
 * Since placeImage does not crop parts of image out of bounds, we have two options.
   - We ignore the parts out of bounds
   - We increase the bounds so that the binding box contains both images
+
   htdp-image chooses the second option, which results in placeImage being a function that can be used to implement
   all combinator functions.
 * I don't think cropping will be supported, unless there is some hacky way of simulating cropping.
@@ -53,3 +92,4 @@ Only the following 2htdp/image functions have been ported so far:
   For example, if we have an equilateral triangle, the binding box is originally (width X height) of the triangle.
   Then let's say we rotate the triangle by 30 degrees. In this case, the new binding box will be big enough to fit
   the (width X height) binding box, not the triangle.
+* Instead of having "x-place" and "y-place", there is one Alignment type with 3 members (Low, Mid, and High).
