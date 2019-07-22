@@ -53,11 +53,11 @@ origin = (0, 0)
 --   and going to point @(x2, y2)@. If the line crosses the given image's binding box,
 --   then new image dimesions are changed to accommodate the line.
 addLine
-  :: Image -- ^ input image
-  -> Float -- ^ x1
-  -> Float -- ^ y1
-  -> Float -- ^ x2
-  -> Float -- ^ y2
+  :: Image -- ^ @i@
+  -> Float -- ^ @x1@
+  -> Float -- ^ @y1@
+  -> Float -- ^ @x2@
+  -> Float -- ^ @y2@
   -> Color
   -> Image
 addLine i x1 y1 x2 y2 c =
@@ -65,9 +65,9 @@ addLine i x1 y1 x2 y2 c =
 
 -- | Constructs a circle of radius @r@, drawing mode @m@ and color @c@.
 circle
-  :: Float -- ^ r
-  -> Mode  -- ^ m
-  -> Color -- ^ c
+  :: Float -- ^ @r@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @c@
   -> Image
 circle r mode c = Image { width  = r * 2
                         , height = r * 2
@@ -80,10 +80,10 @@ circle r mode c = Image { width  = r * 2
 
 -- | Constructs an ellipse of width @w@, height @h@, mode @m@, and color @c@.
 ellipse
-  :: Float -- ^ w
-  -> Float -- ^ h
-  -> Mode  -- ^ m
-  -> Color -- ^ c
+  :: Float -- ^ @w@
+  -> Float -- ^ @h@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @c@
   -> Image
 ellipse w h m c = Image { width  = w
                         , height = h
@@ -102,10 +102,10 @@ emptyImage = Image 0 0 []
 --   angle between those sides is @a@, mode is @m@ and color is @c@. If the angle
 --   is less than @180@, then the triangle will point up, else it will point down.
 isoscelesTriangle
-  :: Float -- ^ l
-  -> Float -- ^ 1
-  -> Mode  -- ^ m
-  -> Color -- ^ c
+  :: Float -- ^ @l@
+  -> Float -- ^ @a@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @c@
   -> Image
 isoscelesTriangle sl deg m c = Image
   { width  = newW
@@ -128,9 +128,9 @@ isoscelesTriangle sl deg m c = Image
 -- | Constructs an image of a line segment of color @c@ that connects the points
 --   @(0,0)@ to @(x1, y1)@.
 line
-  :: Float -- ^ x1
-  -> Float -- ^ y1
-  -> Color -- ^ c
+  :: Float -- ^ @x@1
+  -> Float -- ^ @y@1
+  -> Color -- ^ @c@
   -> Image
 line x y c = Image { width  = abs x
                    , height = abs y
@@ -143,10 +143,10 @@ line x y c = Image { width  = abs x
 
 -- | Constructs a rectangle of width @w@, height @h@, mode @m@, and color @c@.
 rectangle
-  :: Float -- ^ w
-  -> Float -- ^ h
-  -> Mode  -- ^ m
-  -> Color -- ^ c
+  :: Float -- ^ @w@
+  -> Float -- ^ @h@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @c@
   -> Image
 rectangle w h mode c = Image { width  = w
                              , height = h
@@ -161,10 +161,10 @@ rectangle w h mode c = Image { width  = w
 --   top and bottom pair of angles is @a@, and the left and right are @180 - a@.
 --   As usual, mode is @m@ and color is @c@.
 rhombus
-  :: Float -- ^ l
-  -> Float -- ^ a
-  -> Mode  -- ^ m
-  -> Color -- ^ c
+  :: Float -- ^ @l@
+  -> Float -- ^ @a@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @c@
   -> Image
 rhombus sideLength angle m c = Image { width  = base
                                      , height = opp
@@ -183,10 +183,10 @@ rhombus sideLength angle m c = Image { width  = base
 -- | Constructs a right triangle with base length @b@, perpendicular length
 --   @p@, mode @m@, and color @c@.
 rightTriangle
-  :: Float -- ^ b
-  -> Float -- ^ p
-  -> Mode  -- ^ m
-  -> Color -- ^ c
+  :: Float -- ^ @b@
+  -> Float -- ^ @p@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @c@
   -> Image
 rightTriangle b p m c = Image { width  = b
                               , height = p
@@ -201,9 +201,9 @@ rightTriangle b p m c = Image { width  = b
 
 -- | Constructs a square of side @s@, mode @m@, and color @c@.
 square
-  :: Float -- ^ s
-  -> Mode  -- ^ m
-  -> Color -- ^ c
+  :: Float -- ^ @s@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @c@
   -> Image
 square w = rectangle w w
 
@@ -213,9 +213,9 @@ square w = rectangle w w
 --   and openGL (the underlying graphics library) doesn't draw them correctly.
 --   This will be corrected in future versions.
 star
-  :: Float -- ^ l
-  -> Mode  -- ^ m
-  -> Color -- ^ c
+  :: Float -- ^ @l@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @c@
   -> Image
 star side m c = Image { width  = w
                       , height = h
@@ -253,9 +253,9 @@ star side m c = Image { width  = w
 -- | Constructs an upward-pointing equilateral triangle with length @l@,
 --   mode @m@, and color @c@.
 triangle
-  :: Float -- ^ l
-  -> Mode  -- ^ m
-  -> Color -- ^ c
+  :: Float -- ^ @l@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @c@
   -> Image
 triangle sideLength = isoscelesTriangle sideLength 60
 
@@ -264,11 +264,11 @@ triangle sideLength = isoscelesTriangle sideLength 60
 --   If it's not possible to construct the triangle with the given arguments,
 --   an empty image is returned.
 triangleAAS
-  :: Float -- ^ A
-  -> Float -- ^ B
-  -> Float -- ^ c
-  -> Mode  -- ^ m
-  -> Color -- ^ color
+  :: Float -- ^ @A@
+  -> Float -- ^ @B@
+  -> Float -- ^ @c@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @color@
   -> Image
 triangleAAS degr degl t = triangleSSS
   (t * (sine . Degrees $ degr) / (sine . Degrees $ 180 - (degl + degr)))
@@ -280,11 +280,11 @@ triangleAAS degr degl t = triangleSSS
 --   If it's not possible to construct the triangle with the given arguments,
 --   an empty image is returned.
 triangleASA
-  :: Float -- ^ A
-  -> Float -- ^ C
-  -> Float -- ^ b
-  -> Mode  -- ^ m
-  -> Color -- ^ color
+  :: Float -- ^ @A@
+  -> Float -- ^ @C@
+  -> Float -- ^ @b@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @color@
   -> Image
 triangleASA degl l degt = triangleSSS
   (l * (sine . Degrees $ degl) / (sine . Degrees $ 180 - (degt + degl)))
@@ -296,11 +296,11 @@ triangleASA degl l degt = triangleSSS
 --   If it's not possible to construct the triangle with the given arguments,
 --   an empty image is returned.
 triangleSAA
-  :: Float -- ^ B
-  -> Float -- ^ C
-  -> Float -- ^ a
-  -> Mode  -- ^ m
-  -> Color -- ^ color
+  :: Float -- ^ @B@
+  -> Float -- ^ @C@
+  -> Float -- ^ @a@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @color@
   -> Image
 triangleSAA r degr degt = triangleSSS
   r
@@ -312,11 +312,11 @@ triangleSAA r degr degt = triangleSSS
 --   If it's not possible to construct the triangle with the given arguments,
 --   an empty image is returned.
 triangleASS
-  :: Float -- ^ A
-  -> Float -- ^ b
-  -> Float -- ^ c
-  -> Mode  -- ^ mode
-  -> Color -- ^ color
+  :: Float -- ^ @A@
+  -> Float -- ^ @b@
+  -> Float -- ^ @c@
+  -> Mode  -- ^ @mode@
+  -> Color -- ^ @color@
   -> Image
 triangleASS deg l t = triangleSSS
   (((l ** 2) + (t ** 2) - 2 * t * l * (cosine . Degrees $ deg)) ** (1 / 2))
@@ -328,11 +328,11 @@ triangleASS deg l t = triangleSSS
 --   If it's not possible to construct the triangle with the given arguments,
 --   an empty image is returned.
 triangleSAS
-  :: Float -- ^ B
-  -> Float -- ^ a
-  -> Float -- ^ c
-  -> Mode  -- ^ mode
-  -> Color -- ^ color
+  :: Float -- ^ @B@
+  -> Float -- ^ @a@
+  -> Float -- ^ @c@
+  -> Mode  -- ^ @mode@
+  -> Color -- ^ @color@
   -> Image
 triangleSAS r deg t = triangleSSS
   r
@@ -344,11 +344,11 @@ triangleSAS r deg t = triangleSSS
 --   If it's not possible to construct the triangle with the given arguments,
 --   an empty image is returned.
 triangleSSA
-  :: Float -- ^ C
-  -> Float -- ^ a
-  -> Float -- ^ c
-  -> Mode  -- ^ mode
-  -> Color -- ^ color
+  :: Float -- ^ @C@
+  -> Float -- ^ @a@
+  -> Float -- ^ @c@
+  -> Mode  -- ^ @mode@
+  -> Color -- ^ @color@
   -> Image
 triangleSSA r l deg = triangleSSS
   r
@@ -360,11 +360,11 @@ triangleSSA r l deg = triangleSSS
 --   If it's not possible to construct the triangle with the given arguments,
 --   an empty image is returned.
 triangleSSS
-  :: Float -- ^ a
-  -> Float -- ^ b
-  -> Float -- ^ c
-  -> Mode  -- ^ m
-  -> Color -- ^ color
+  :: Float -- ^ @a@
+  -> Float -- ^ @b@
+  -> Float -- ^ @c@
+  -> Mode  -- ^ @m@
+  -> Color -- ^ @color@
   -> Image
 triangleSSS r l t m c =
   if (round . distance (bottX, negate newH / 2) $ (-t / 2, newH / 2) :: Integer)

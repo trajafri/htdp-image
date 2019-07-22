@@ -1,5 +1,6 @@
 {-# LANGUAGE RecordWildCards #-}
 
+-- | Image related utilities.
 module Graphics.Data.Image
   ( Image(..)
   , rotate
@@ -10,9 +11,9 @@ import           Data.Angle
 import qualified Graphics.Gloss                as G
 
 -- | A 2D Image.
-data Image = Image {width :: Float ,
-                    height :: Float ,
-                    shapes :: [(G.Picture, G.Point)] -- ^ collection of all Gloss Pictures that create the Image.
+data Image = Image {width :: Float ,                 -- ^ Width of image
+                    height :: Float ,                -- ^ Height of image
+                    shapes :: [(G.Picture, G.Point)] -- ^ Collection of all Gloss Pictures that create the Image.
                    } deriving Eq
 
 -- | Rotates @i@ by @deg@ degrees in a counter-clockwise direction.
@@ -20,7 +21,10 @@ data Image = Image {width :: Float ,
 --   to reduce the rotated image's binding box to fit the actual image.
 --   Instead, it just creates a new binding box so that @i@'s binding box
 --   fits in it.
-rotate :: Float -> Image -> Image
+rotate
+  :: Float -- ^ @deg@
+  -> Image -- ^ @i@
+  -> Image
 rotate deg Image {..} = Image newW newH
   $ map (\(p, c) -> (G.rotate (negate deg) p, rotateC c)) shapes
  where
