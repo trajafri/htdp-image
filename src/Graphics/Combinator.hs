@@ -1,31 +1,33 @@
 {-# LANGUAGE MultiWayIf, RecordWildCards #-}
 
 module Graphics.Combinator
-  ( above
-  , aboves
-  , aboveAlign
-  , Alignment
+  ( overlay
+  , overlayAlign
+  , overlayOffset
+  , overlayAlignOffset
+  , overlayXY
+  , underlay
+  , underlayAlign
+  , underlayOffset
+  , underlayXY
+  , underlayAlignOffset
   , beside
   , besides
   , besideAlign
+  , besideAligns
+  , above
+  , aboves
+  , aboveAlign
+  , aboveAligns
+  , Alignment
   , high
   , low
   , mid
-  , overlay
-  , overlayAlign
-  , overlayAlignOffset
-  , overlayOffset
-  , overlayXY
   , placeImage
   , placeImages
   , placeImageAlign
   , placeImagesAlign
   , rotate
-  , underlay
-  , underlayAlign
-  , underlayOffset
-  , underlayAlignOffset
-  , underlayXY
   )
 where
 
@@ -64,6 +66,9 @@ aboveAlign a i1 i2 = placeImage i2
                                 i1
   where offset = imageOffset width a i1 i2
 
+aboveAligns :: Alignment -> [Image] -> Image
+aboveAligns a = foldr1 (aboveAlign a)
+
 beside :: Image -> Image -> Image
 beside = besideAlign mid
 
@@ -76,6 +81,9 @@ besideAlign a i1 i2 = placeImage i2
                                  (negate offset + height i1 / 2)
                                  i1
   where offset = imageOffset height a i1 i2
+
+besideAligns :: Alignment -> [Image] -> Image
+besideAligns a = foldr1 (besideAlign a)
 
 placeImage :: Image -> Float -> Float -> Image -> Image
 placeImage i1 x y = placeImageAlign i1 x y mid mid
