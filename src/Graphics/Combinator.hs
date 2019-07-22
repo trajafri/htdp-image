@@ -1,7 +1,8 @@
 {-# LANGUAGE MultiWayIf, RecordWildCards #-}
 
 module Graphics.Combinator
-  ( overlay
+  ( Alignment
+  , overlay
   , overlayAlign
   , overlayOffset
   , overlayAlignOffset
@@ -14,12 +15,11 @@ module Graphics.Combinator
   , beside
   , besides
   , besideAlign
-  , besideAligns
+  , besidesAlign
   , above
   , aboves
   , aboveAlign
-  , aboveAligns
-  , Alignment
+  , abovesAlign
   , high
   , low
   , mid
