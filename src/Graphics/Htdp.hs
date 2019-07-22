@@ -16,12 +16,17 @@
 
 module Graphics.Htdp
   ( module Graphics.Gloss.Data.Color
+    -- * Image constructors
   , module Graphics.Shape
+    -- * Image combinators
   , module Graphics.Combinator
-  , drawImage
+    -- * Image
   , Image
   , width
   , height
+  , rotate
+    -- * Output
+  , drawImage
   )
 where
 

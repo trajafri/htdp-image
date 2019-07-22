@@ -80,8 +80,7 @@ Maybe. I think Gloss allows something like this
 * Usually, 2htdp/image is used on the DrRacket IDE, which treats images as bitmap images
   (and even draws them there!).
   htdp-image doesn't have that feature so every image is drawn in a new window.
-* empty-scene is basically the same as a rectangle (or, there is no concept of scene as it is in 2htdp/image).
-  In later versions, this will be removed.
+* There is no concept of scene as it is in 2htdp/image.
 * Non-convex polygons are glitchy, thanks to OpenGL. Something will be done to fix non-convex polygons
   provided by htdp-image, but if a user creates a non-convex polygon, then they might run into OpenGL issues.
 * placeImage does not crop part of images that lay outside the dimensions of the image they are being placed on top of.

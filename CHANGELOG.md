@@ -1,5 +1,13 @@
 # Revision history for htdp-image
 
+## 1.0.0.0 -- 2019-07-21
+
+* Remove emptyScene.
+* Added abovesAlign, besidesAlign.
+* Added documentation.
+* Ready for hackage! (I think...)
+
+
 ## 0.4.2.0 -- 2019-07-21
 
 * Added triangle function family.

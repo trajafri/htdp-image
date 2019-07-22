@@ -2,6 +2,9 @@
 
 module Graphics.Combinator
   ( Alignment
+  , high
+  , low
+  , mid
   , overlay
   , overlayAlign
   , overlayOffset
@@ -20,9 +23,6 @@ module Graphics.Combinator
   , aboves
   , aboveAlign
   , abovesAlign
-  , high
-  , low
-  , mid
   , placeImage
   , placeImages
   , placeImageAlign

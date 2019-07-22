@@ -1,7 +1,7 @@
 {-# LANGUAGE MultiWayIf #-}
-{-# OPTIONS_HADDOCK hide #-}
 
 -- Sorted as they are in 2htdp/image
+-- | Image constructors
 module Graphics.Shape
   ( Mode
   , solid
@@ -14,6 +14,8 @@ module Graphics.Shape
   , triangle
   , rightTriangle
   , isoscelesTriangle
+  -- *** The following image is useful for the following family of functions.
+  -- |    [triangleFamilyPic](https://docs.racket-lang.org/teachpack/triangle-xxx.png)
   , triangleSSS
   , triangleASS
   , triangleSAS
@@ -128,8 +130,8 @@ isoscelesTriangle sl deg m c = Image
 -- | Constructs an image of a line segment of color @c@ that connects the points
 --   @(0,0)@ to @(x1, y1)@.
 line
-  :: Float -- ^ @x@1
-  -> Float -- ^ @y@1
+  :: Float -- ^ @x1@
+  -> Float -- ^ @y1@
   -> Color -- ^ @c@
   -> Image
 line x y c = Image { width  = abs x
