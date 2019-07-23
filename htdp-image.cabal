@@ -16,6 +16,7 @@ description:
   htdp-image is a simple graphics library inspired by Racket's htdp/image.
   Under the hood, it is currently a wrapper on top of Gloss, another easy
   to use graphics library but htdp-image makes drawing objects even easier for beginners.
+  As long as Gloss works on a machine, this library should also work.
 
 source-repository head
   type:                git
