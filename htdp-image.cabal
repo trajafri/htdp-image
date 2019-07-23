@@ -6,8 +6,8 @@ author:                Turab Jafri
 maintainer:            trajafri@gmail.com
 category:              Graphics
 build-type:            Simple
-extra-source-files:    CHANGELOG.md
-cabal-version:         >=2.0
+extra-source-files:    CHANGELOG.md README.md
+cabal-version:         2.0
 
 synopsis:            
   Beginner friendly graphics library.
@@ -16,6 +16,10 @@ description:
   htdp-image is a simple graphics library inspired by Racket's htdp/image.
   Under the hood, it is currently a wrapper on top of Gloss, another easy
   to use graphics library but htdp-image makes drawing objects even easier for beginners.
+
+source-repository head
+  type:                git
+  location:            https://github.com/trajafri/htdp-image
 
 library
   exposed-modules:     Graphics.Htdp,
