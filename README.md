@@ -11,6 +11,10 @@ work on a lower level than Gloss.
 
 This library uses the [combinator pattern](https://wiki.haskell.org/Combinator_pattern) to draw images.
 
+
+For an example program, check [tromino-tile](https://github.com/trajafri/tromino-tile).
+
+
 ## Examples:
 
 To draw five circles beside each other:
@@ -52,6 +56,3 @@ drawImage $ sier . sier . sier . sier $ (triangle 20 solid red)
 ```
 
 ![alt text](https://raw.githubusercontent.com/trajafri/htdp-image/master/example-images/sierpinski.png "Sierpinski 4")
-
-
-For an example program, check [tromino-tile](https://github.com/trajafri/tromino-tile).
