@@ -1,5 +1,10 @@
 # Revision history for htdp-image
 
+## 1.1.0.0 -- 2019-07-25
+
+* Add "Htdp" to submodules
+
+
 ## 1.0.0.0 -- 2019-07-21
 
 * Remove emptyScene.
