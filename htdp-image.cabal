@@ -25,10 +25,10 @@ source-repository head
 
 library
   exposed-modules:     Graphics.Htdp,
-                       Graphics.Data.Image,
-                       Graphics.Shape,
-                       Graphics.Combinator
-  other-modules:       Graphics.Util.Arithmetic
+                       Graphics.Htdp.Combinator,
+                       Graphics.Htdp.Data.Image,
+                       Graphics.Htdp.Shape
+  other-modules:       Graphics.Htdp.Util.Arithmetic
   build-depends:       AC-Angle ^>=1.0,
                        base ^>=4.12,
                        gloss ^>=1.13.0

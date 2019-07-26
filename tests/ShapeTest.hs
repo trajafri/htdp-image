@@ -3,7 +3,7 @@ module ShapeTest
   )
 where
 
-import           Graphics.Data.Image
+import           Graphics.Htdp.Data.Image
 import           Graphics.Htdp
 import qualified Graphics.Gloss                as G
 import           Test.HUnit

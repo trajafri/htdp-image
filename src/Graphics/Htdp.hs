@@ -17,9 +17,9 @@
 module Graphics.Htdp
   ( module Graphics.Gloss.Data.Color
     -- * Image constructors
-  , module Graphics.Shape
+  , module Graphics.Htdp.Shape
     -- * Image combinators
-  , module Graphics.Combinator
+  , module Graphics.Htdp.Combinator
     -- * Image
   , Image
   , width
@@ -32,9 +32,9 @@ where
 
 import qualified Graphics.Gloss                as G
 import           Graphics.Gloss.Data.Color
-import           Graphics.Combinator
-import           Graphics.Data.Image
-import           Graphics.Shape
+import           Graphics.Htdp.Combinator
+import           Graphics.Htdp.Data.Image
+import           Graphics.Htdp.Shape
 
 -- | Function to draw an image in a new window with same dimensions as the given image.
 drawImage :: Image -> IO ()

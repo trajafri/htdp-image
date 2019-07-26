@@ -3,7 +3,7 @@ module CombinatorTest
   )
 where
 
-import           Graphics.Data.Image
+import           Graphics.Htdp.Data.Image
 import           Graphics.Htdp
 import           Graphics.Gloss                 ( Picture )
 import           Graphics.Gloss.Data.Picture    ( blank )
