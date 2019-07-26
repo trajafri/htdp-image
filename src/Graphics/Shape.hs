@@ -14,8 +14,8 @@ module Graphics.Shape
   , triangle
   , rightTriangle
   , isoscelesTriangle
-  -- *** The following image is useful for the following family of functions.
-  -- |    [triangleFamilyPic](https://docs.racket-lang.org/teachpack/triangle-xxx.png)
+  -- *** The following image from 2htdp/image documentation is useful for the following family of functions.
+  -- |   <<diagrams/triangleDiagram.png>>
   , triangleSSS
   , triangleASS
   , triangleSAS

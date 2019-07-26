@@ -1,5 +1,7 @@
 {-# LANGUAGE MultiWayIf, RecordWildCards #-}
 
+-- | Utility to combine images.
+
 module Graphics.Combinator
   ( Alignment
   , high
